@@ -7,9 +7,9 @@ namespace CatanUtility.Classes
 {
     public static class FileUtility
     {
-        public static void SaveGame(Game game)
+        public static void SaveGame(Game game, string file = "../../../Data/Game.data")
         {
-            StreamWriter sw = new StreamWriter("../../../Data/Game.data");
+            StreamWriter sw = new StreamWriter(file);
             sw.WriteLine("--Hexes--");
             foreach(var hex in game.Board.Hexes)
             {
@@ -37,9 +37,9 @@ namespace CatanUtility.Classes
             }
             sw.Close();
         }
-        public static Game OpenSaveGame()
+        public static Game OpenSaveGame(string file = "../../../Data/Game.data")
         {
-            StreamReader sr = new StreamReader("../../../Data/Game.data");
+            StreamReader sr = new StreamReader(file);
             var game = new Game();
             sr.ReadLine();
             for (int i = 0; i< 19; i++)
@@ -80,9 +80,9 @@ namespace CatanUtility.Classes
             sr.Close();
             return game;
         }
-        public static List<BoardHex> OpenBoardFile()
+        public static List<BoardHex> OpenBoardFile(string file = "../../../Data/BoardSetup.txt")
         {
-            StreamReader sr = new StreamReader("../../../Data/BoardSetup.txt");
+            StreamReader sr = new StreamReader(file);
             var Hexes = new List<BoardHex>();
             for (int i = 0; i < 19; i++)
             {
@@ -99,9 +99,9 @@ namespace CatanUtility.Classes
             sr.Close();
             return Hexes;
         }
-        public static List<Player> OpenPlayersFile()
+        public static List<Player> OpenPlayersFile(string file = "../../../Data/Players.txt")
         {
-            StreamReader sr = new StreamReader("../../../Data/Players.txt");
+            StreamReader sr = new StreamReader(file);
             var Players = new List<Player>();
             var line = sr.ReadLine();
             while (line != null)
