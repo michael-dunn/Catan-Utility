@@ -24,21 +24,21 @@ namespace CatanUtility.Classes
                             case "s"://settlement
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.BoardIndex(hex, position);
+                                buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
                                 game.Build(BuildType.Settlement, buildIndex, color, initialBuild);
                                 return true;
                             case "r"://road
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.BoardIndex(hex, position);
+                                buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
                                 game.Build(BuildType.Road, buildIndex, color, initialBuild);
                                 return true;
                             case "c"://city
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.BoardIndex(hex, position);
+                                buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
                                 game.Build(BuildType.City, buildIndex, color, initialBuild);
                                 return true;
@@ -83,12 +83,13 @@ namespace CatanUtility.Classes
                             return false;
                     }
                 case "r"://roll
-                    diceValue = ParseIntBetweenValues(input[1], "dice value", 2,12);
+                    diceValue = ParseIntBetweenValues(input[1], "dice value", 2, 12);
                     Console.WriteLine("A {0} was rolled.", diceValue);
                     game.DiceRoll(diceValue);
                     return true;
                 case "s"://setup
-                    switch (input[1]) {
+                    switch (input[1])
+                    {
                         case "b": //board
                             game.Board.BuildBoard();
                             return true;
@@ -196,7 +197,7 @@ namespace CatanUtility.Classes
                 return col;
             Console.WriteLine("{0} is not a color of a player.", col);
             Console.Write("Colors include: ");
-            foreach (var player in players.Take(players.Count()-1))
+            foreach (var player in players.Take(players.Count() - 1))
             {
                 Console.Write("{0}, ", player.Color);
             }
@@ -206,7 +207,7 @@ namespace CatanUtility.Classes
         }
         public static string VerifyColorIsAllowed(string col)
         {
-            var colors = new List<string>() { "Red", "Blue", "White", "Orange"};
+            var colors = new List<string>() { "Red", "Blue", "White", "Orange" };
             if (colors.Any(p => p.Trim().ToLower() == col.Trim().ToLower()))
                 return colors.First(p => p == col);
             Console.WriteLine("{0} is not a color in the game.", col);

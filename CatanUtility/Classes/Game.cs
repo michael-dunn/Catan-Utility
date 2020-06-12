@@ -48,8 +48,8 @@ namespace CatanUtility.Classes
             {
                 for (int i = 1; i <= 6; i++)
                 {
-                    var color = Board.Vertices[GameUtility.BoardIndex(hexIndex, i)].Color;
-                    var buildingType = Board.Vertices[GameUtility.BoardIndex(hexIndex, i)].BuildingType;
+                    var color = Board.Vertices[GameUtility.GetBoardIndex(hexIndex, i)].Color;
+                    var buildingType = Board.Vertices[GameUtility.GetBoardIndex(hexIndex, i)].BuildingType;
                     if (color != null)
                     {
                         var player = Players.FirstOrDefault(p => p.Color.ToLower().Trim() == color.ToLower().Trim());
@@ -64,25 +64,62 @@ namespace CatanUtility.Classes
             }
         }
 
-        public void Build(BuildType developmentCard, string color, bool free = true)
+        public void Build(BuildType developmentCard, string playerColor, bool free = true)
         {
-            Console.WriteLine("{0} built a development card", color);
+            var player = Players.First(p => p.Color == playerColor);
+            if (!free)
+            {
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Sheep));
+            }
+            Console.WriteLine("{0} built a development card", playerColor);
         }
 
-        public void Build(BuildType buildType, int buildPosition, string playerColor, bool free = true)
+        public void Build(BuildType buildType, int buildPosition, string playerColor, bool free = false)
         {
+            var player = Players.First(p => p.Color == playerColor);
             switch (buildType)
             {
                 case BuildType.Road:
+                    if (!free)
+                    {
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c=>c.Type == CatanResourceType.Brick));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wood));
+                    }
                     Board.Edges[buildPosition].Color = playerColor;
                     Board.Edges[buildPosition].Occupied = true;
                     Console.WriteLine("{0} built a road at index {1}", playerColor, buildPosition);
                     break;
-                default:
+                case BuildType.Settlement:
+                    if (!free)
+                    {
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Brick));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wood));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Sheep));
+                    }
                     Board.Vertices[buildPosition].BuildingType = buildType;
                     Board.Vertices[buildPosition].Color = playerColor;
                     Board.Vertices[buildPosition].Occupied = true;
                     Console.WriteLine("{0} built a {1} at {2}", playerColor, buildType, buildPosition);
+                    break;
+                case BuildType.City:
+                    if (!free)
+                    {
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
+                    }
+                    Board.Vertices[buildPosition].BuildingType = buildType;
+                    Board.Vertices[buildPosition].Color = playerColor;
+                    Board.Vertices[buildPosition].Occupied = true;
+                    Console.WriteLine("{0} built a {1} at {2}", playerColor, buildType, buildPosition);
+                    break;
+                default:
+                    Console.WriteLine("Something broke when building");
                     break;
             }
         }
