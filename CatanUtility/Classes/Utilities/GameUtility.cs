@@ -162,6 +162,36 @@ namespace CatanUtility.Classes
             return returnNumber - 1;
         }
 
+        public static int GetVertexScore(List<int> hexValues)
+        {
+            int score = 0;
+            foreach (var value in hexValues)
+            {
+                if (value == 2 || value == 12)
+                {
+                    score += 1;
+                }
+                else if (value == 3 || value == 11)
+                {
+                    score += 2;
+                }
+
+                else if (value == 4 || value == 10)
+                {
+                    score += 3;
+                }
+                else if (value == 5 || value == 9)
+                {
+                    score += 4;
+                }
+                else if (value == 6 || value == 8)
+                {
+                    score += 5;
+                }
+            }
+            return score;
+        }
+
         public static List<int> GetTouchingHexIndices(int vertexIndex)
         {
             vertexIndex++;

@@ -55,13 +55,21 @@ namespace CatanUtilityTests
         }
 
         [Test]
-        public void BestBoardSpotsWorks()
+        public void GetTouchingHexesWorks()
         {
             Assert.AreEqual(new List<int>() { 0 },GameUtility.GetTouchingHexIndices(GameUtility.GetBoardIndex(1,1)));
 
             Assert.AreEqual(new List<int>() { 0, 1, 4 },GameUtility.GetTouchingHexIndices(GameUtility.GetBoardIndex(1, 3)));
 
             Assert.AreEqual(new List<int>() { 13, 16, 17 }, GameUtility.GetTouchingHexIndices(GameUtility.GetBoardIndex(17, 2)));
+        }
+
+        [Test]
+        public void BestVerticesOnBoardWorks()
+        {
+            List<int> bestVertices = game.GetBestVertices();
+
+            List<List<int>> bestVerticesHexes = bestVertices.Select(v => GameUtility.GetTouchingHexIndices(v)).ToList();
         }
     }
 }

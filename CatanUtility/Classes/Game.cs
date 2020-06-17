@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CatanUtility.Classes.Structs;
 
 namespace CatanUtility.Classes
 {
@@ -62,6 +61,23 @@ namespace CatanUtility.Classes
                     }
                 }
             }
+        }
+
+        public List<int> GetBestVertices()
+        {
+            var topHexes = new List<BoardHex>();
+            var hexScores = new List<int>();
+            for (int i = 0; i<54; i++)
+            {
+                var hexValues = new List<int>();
+                foreach(var hexIndex in GameUtility.GetTouchingHexIndices(i))
+                {
+                    hexValues.Add(Board.Hexes[hexIndex].Number);
+                }
+                hexScores.Add(GameUtility.GetVertexScore(hexValues));
+            }
+            var hexandindex = hexScores.Select((score, index) => new { score, index });
+            return hexandindex.OrderByDescending(h => h.score).Take(5).Select(h=>h.index).ToList();
         }
 
         public void Build(BuildType developmentCard, string playerColor, bool free = true)
