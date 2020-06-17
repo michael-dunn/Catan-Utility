@@ -4,4 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Game\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CatanUtility\CatanUtility.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Game\NewGame.cshtml" />
+  </ItemGroup>
 </Project>

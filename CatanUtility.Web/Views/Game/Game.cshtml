@@ -1,0 +1,48 @@
+﻿@model CatanUtility.Classes.Game
+
+@{
+    ViewData["Title"] = "Game Utility";
+}
+
+<h1>Game Utility</h1>
+
+<div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start">
+        <div>
+            <h4>Players</h4>
+            <ul>
+                @foreach (var player in Model.Players)
+                {
+                    <li>@player.Name - @player.Color</li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h4>Hexes</h4>
+            <ol>
+                @foreach (var hex in Model.Board.Hexes)
+                {
+                    <li>@hex.Resource - @hex.Number</li>
+                }
+            </ol>
+        </div>
+        <div>
+            <h4>Edges</h4>
+            <ol>
+                @foreach (var edge in Model.Board.Edges)
+                {
+                    <li>@(edge.Occupied ? edge.Color + " road" : "unocuppied")</li>
+                }
+            </ol>
+        </div>
+        <div>
+            <h4>Vertices</h4>
+            <ol>
+                @foreach (var vertex in Model.Board.Vertices)
+                {
+                    <li>@(vertex.Occupied ? vertex.Color + " " + vertex.BuildingType.ToString() : "unocuppied")</li>
+                }
+            </ol>
+        </div>
+    </div>
+</div>
