@@ -115,5 +115,33 @@ namespace CatanUtility.Classes
             sr.Close();
             return Players;
         }
+
+        public static List<Edge> SetEdgeGraph(List<Edge> edges, string file = "../../../Data/EdgeEdges.txt")
+        {
+            StreamReader sr = new StreamReader(file);
+            var line = sr.ReadLine();
+            while (line != null)
+            {
+                var ints = line.Split('\t').Where(i=>!string.IsNullOrWhiteSpace(i)).Select(i=>int.Parse(i)).ToList();
+                edges[ints[0]].LinkedEdges = ints.Skip(1).ToList();
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            return edges;
+        }
+
+        public static List<Vertex> SetVertexGraph(List<Vertex> vertices, string file = "../../../Data/EdgeEdges.txt")
+        {
+            StreamReader sr = new StreamReader(file);
+            var line = sr.ReadLine();
+            while (line != null)
+            {
+                var ints = line.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
+                vertices[ints[0]].LinkedVertices = ints.Skip(1).ToList();
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            return vertices;
+        }
     }
 }

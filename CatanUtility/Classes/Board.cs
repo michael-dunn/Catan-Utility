@@ -15,11 +15,16 @@ namespace CatanUtility.Classes
             Hexes = new List<BoardHex>();
             Vertices = new List<Vertex>();
             Edges = new List<Edge>();
-            for (int i = 0; i < 54; i++)
+            for (int i = 0; i < 72; i++)
             {
-                Vertices.Add(new Vertex());
+                if (i < 54) { Vertices.Add(new Vertex()); }
                 Edges.Add(new Edge());
             }
+        }
+
+        public Board(string file) : this()
+        {
+            GameUtility.SetupGraph(this, file);
         }
 
         public void PrintBoard()

@@ -16,6 +16,12 @@ namespace CatanUtility.Classes
             CloseGame = false;
         }
 
+        public Game(string file) : this()
+        {
+            Board = new Board(file);
+        }
+
+
         public void DiceRoll(int value)
         {
             if (value == 7)
@@ -140,7 +146,7 @@ namespace CatanUtility.Classes
             }
         }
 
-        public bool Over() => Players.Any(p=>p.VictoryPoints>10);
+        public bool Over() => Players.Any(p=>p.VictoryPoints>=10);
     }
 
     public enum BuildType

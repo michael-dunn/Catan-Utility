@@ -12,7 +12,7 @@ namespace CatanUtility.Web.Controllers
     public class GameController : Controller
     {
         Game game;
-        // GET: /<controller>/
+        
         public IActionResult Index()
         {
             return View();
@@ -21,12 +21,9 @@ namespace CatanUtility.Web.Controllers
         public IActionResult Game()
         {
             game = FileUtility.OpenSaveGame();
-            //game.Players = new List<Player>() {
-            //    new Player() { Name = "Michael", Color = "Red" },
-            //    new Player() { Name = "Emma", Color = "White" },
-            //    new Player() { Name = "Mom", Color = "Orange" },
-            //};
+            
             return View(game);
         }
+
     }
 }

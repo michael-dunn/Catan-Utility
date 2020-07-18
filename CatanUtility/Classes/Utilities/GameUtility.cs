@@ -199,5 +199,23 @@ namespace CatanUtility.Classes
                     .Where(hexIndices => hexIndices.vertices.Contains(vertexIndex))
                     .Select(hexIndices => hexIndices.index).ToList();
         }
+
+        public static void SetupGraph(Board board, string file= "../../../Data/")
+        {
+            board.Edges = FileUtility.SetEdgeGraph(board.Edges, file + "EdgeEdges.txt");
+            board.Vertices = FileUtility.SetVertexGraph(board.Vertices, file + "VertexEdges.txt");
+        }
+
+        public static List<Edge> GetLongestRoad(Game game)
+        {
+            var roads = new List<Edge>();
+            var tie = false;
+
+
+
+            return roads;
+        }
+
+        
     }
 }

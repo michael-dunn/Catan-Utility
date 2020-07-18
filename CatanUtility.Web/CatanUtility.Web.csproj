@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Views\Game\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatanUtility\CatanUtility.csproj">
@@ -14,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Game\NewGame.cshtml" />
+    <Content Remove="wwwroot\css\site.scss" />
   </ItemGroup>
 </Project>
