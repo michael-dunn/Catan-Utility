@@ -17,8 +17,8 @@ namespace CatanUtility.Classes
             Edges = new List<Edge>();
             for (int i = 0; i < 72; i++)
             {
-                if (i < 54) { Vertices.Add(new Vertex()); }
-                Edges.Add(new Edge());
+                if (i < 54) { Vertices.Add(new Vertex(i)); }
+                Edges.Add(new Edge(i));
             }
         }
 
@@ -76,57 +76,17 @@ namespace CatanUtility.Classes
         }
         public void BuildBoard()
         {
-            CatanResourceType catanResourceType = CatanResourceType.Desert;
-            int value = 0;
-            bool success = false;
-
             Console.Write("Open saved board? (Y/N) ");
             var response = Console.Read();
             Console.WriteLine();
             if (response == 'Y')
+            {
                 Hexes = FileUtility.OpenBoardFile();
+            }
             else
+            {
                 BuildRandomBoard();
-            //for (int i = 0; i < 19; i++)
-            //{
-            //    do
-            //    {
-            //        success = true;
-            //        Console.WriteLine("Hex #" + (i + 1));
-            //        Console.WriteLine("{ 'H'=Wheat, 'W'=Wood, 'O'= Ore, 'B'=Brick, 'S'=Sheep, 'D'= Desert }");
-            //        Console.Write("Input type and value as \"W 10\": ");
-            //        var input = Console.ReadLine().Split(' ');
-            //        if (input.Length != 2)
-            //        {
-            //            success = false;
-            //            Console.Clear();
-            //            Console.WriteLine("!--Need two items--!");
-            //        }
-            //        else
-            //        {
-            //            try
-            //            {
-            //                catanResourceType = (CatanResourceType)Char.ToUpper(input[0].First());
-            //                if (!Enum.IsDefined(typeof(CatanResourceType), catanResourceType))
-            //                {
-            //                    success = false;
-            //                    Console.WriteLine("{0} is not an underlying value of the Resource enumeration.", input[0]);
-            //                }
-            //            }
-            //            catch (ArgumentException)
-            //            {
-            //                Console.WriteLine("'{0}' is not a member of the Resource enumeration.", input[0]);
-            //            }
-            //            success = success ? Int32.TryParse(input[1], out value) : false;
-            //        }
-            //    } while (!success);
-            //    Console.Clear();
-            //    var newHex = new BoardHex(catanResourceType, value, false);
-            //    if (catanResourceType == CatanResourceType.Desert)
-            //        newHex.Robber = true;
-            //    Hexes.Add(newHex);
-            //    Console.WriteLine("Successful Hex: " + newHex);
-            //}
+            }
         }
     }
 }

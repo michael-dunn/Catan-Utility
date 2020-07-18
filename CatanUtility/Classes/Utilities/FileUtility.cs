@@ -28,10 +28,10 @@ namespace CatanUtility.Classes
             sw.WriteLine("--Players--");
             foreach (var player in game.Players)
             {
-                sw.Write("{0},{1},{2},", player.Color, player.Name, player.VictoryPoints);
+                sw.Write("{0},{1},{2}", player.Color, player.Name, player.VictoryPoints);
                 foreach (var card in player.Hand)
                 {
-                    sw.Write("{0},", (char)card.Type);
+                    sw.Write(",{0}", (char)card.Type);
                 }
                 sw.WriteLine();
             }
@@ -48,7 +48,7 @@ namespace CatanUtility.Classes
                 game.Board.Hexes.Add(new BoardHex() { Number = int.Parse(hexValues[0]), Resource = (CatanResourceType)hexValues[1].First(), Robber = bool.Parse(hexValues[2]) });
             }
             sr.ReadLine();
-            for (int i = 0; i < 54; i++)
+            for (int i = 0; i < 72; i++)
             {
                 var edgeValues = sr.ReadLine().Split(',');
                 game.Board.Edges[i].Color = edgeValues[0];
@@ -57,9 +57,10 @@ namespace CatanUtility.Classes
             sr.ReadLine();
             for (int i = 0; i < 54; i++)
             {
-                var vertexValues = sr.ReadLine().Split(',');
+                var stringvalue = sr.ReadLine();
+                var vertexValues = stringvalue.Split(',');
                 game.Board.Vertices[i].Color = vertexValues[0];
-                game.Board.Vertices[i].BuildingType = (BuildType)vertexValues[1].First();
+                game.Board.Vertices[i].BuildingType = (BuildType)vertexValues[1].FirstOrDefault();
                 game.Board.Vertices[i].Occupied = bool.Parse(vertexValues[2]);
             }
             sr.ReadLine();

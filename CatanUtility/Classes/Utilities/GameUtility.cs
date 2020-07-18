@@ -33,7 +33,7 @@ namespace CatanUtility.Classes
         {
             int topNumber = 0;
             int returnNumber = 0;
-            if (1<= hex && hex <= 3)
+            if (1 <= hex && hex <= 3)
             {
                 switch (position)
                 {
@@ -41,19 +41,19 @@ namespace CatanUtility.Classes
                         returnNumber = hex;
                         break;
                     case 2:
-                        returnNumber = hex+4;
+                        returnNumber = hex + 4;
                         break;
                     case 3:
-                        returnNumber = hex+8;
+                        returnNumber = hex + 8;
                         break;
                     case 4:
-                        returnNumber = hex+12;
+                        returnNumber = hex + 12;
                         break;
                     case 5:
-                        returnNumber = hex+7;
+                        returnNumber = hex + 7;
                         break;
                     case 6:
-                        returnNumber = hex+3;
+                        returnNumber = hex + 3;
                         break;
                 }
             }
@@ -200,22 +200,51 @@ namespace CatanUtility.Classes
                     .Select(hexIndices => hexIndices.index).ToList();
         }
 
-        public static void SetupGraph(Board board, string file= "../../../Data/")
+        public static void SetupGraph(Board board, string file = "../../../Data/")
         {
             board.Edges = FileUtility.SetEdgeGraph(board.Edges, file + "EdgeEdges.txt");
             board.Vertices = FileUtility.SetVertexGraph(board.Vertices, file + "VertexEdges.txt");
         }
 
-        public static List<Edge> GetLongestRoad(Game game)
+        public static List<List<Edge>> GetLongestRoad(Game game)
         {
-            var roads = new List<Edge>();
-            var tie = false;
+            var roads = new List<List<Edge>>();
+            var colorRoads = game.Board.Edges.Where(e => e.Color != "");
 
-
-
-            return roads;
+            foreach (var edge in colorRoads)
+            {
+                roads.AddRange(getLongestRoad(colorRoads, new List<Edge>() { edge }, edge));
+            }
+            return roads.Select(r => r.OrderBy(e => e.Index).ToList()).Distinct().ToList();
         }
 
-        
+        private static List<List<Edge>> getLongestRoad(IEnumerable<Edge> possibleEdges, IEnumerable<Edge> edges, Edge previousEdge)
+        {
+            var longestEdges = new List<List<Edge>>() { edges.ToList() };
+            var tempEdges = new List<List<Edge>>() { };
+            foreach (var edgeIndex in previousEdge.LinkedEdges)
+            {
+                if (!edges.Any(e => e.Index == edgeIndex))//Is the edge already counted?
+                {
+                    var nextEdge = possibleEdges.FirstOrDefault(e => e.Index == edgeIndex);//Does the edge have a road on it?
+                    if (nextEdge != null)
+                    {
+                        if (previousEdge.Color == nextEdge.Color)//Does the edge match the color
+                        {
+                            tempEdges = getLongestRoad(possibleEdges, edges.Append(nextEdge), nextEdge);
+                            if ((tempEdges.Count != 0 ? tempEdges.First().Count : 0) > (longestEdges.Count != 0 ? longestEdges.First().Count : 0))
+                            {
+                                longestEdges = tempEdges;
+                            }
+                            else if ((tempEdges.Count != 0 ? tempEdges.First().Count : 0) == (longestEdges.Count != 0 ? longestEdges.First().Count : 0))
+                            {
+                                longestEdges.AddRange(tempEdges);
+                            }
+                        }
+                    }
+                }
+            }
+            return longestEdges;
+        }
     }
 }

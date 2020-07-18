@@ -36,7 +36,9 @@ namespace CatanUtilityTests
         [Test]
         public void GetLongestRoad()
         {
-            List<Edge> roads = GameUtility.GetLongestRoad(game);
+            var roads = GameUtility.GetLongestRoad(game);
+            var ool = roads[0].Equals(roads[1]);
+            var str = "";
         }
     }
 }
