@@ -213,9 +213,13 @@ namespace CatanUtility.Classes
 
             foreach (var edge in colorRoads)
             {
-                roads.AddRange(getLongestRoad(colorRoads, new List<Edge>() { edge }, edge));
+                var tempRoads = getLongestRoad(colorRoads, new List<Edge>() { edge }, edge);
+                if (tempRoads.FirstOrDefault()?.Count > (roads.FirstOrDefault()?.Count == null ? 0 : roads.FirstOrDefault()?.Count))
+                    roads = tempRoads;
+                else if (tempRoads.FirstOrDefault()?.Count == (roads.FirstOrDefault()?.Count == null ? 0 : roads.FirstOrDefault()?.Count))
+                    roads.AddRange(tempRoads);
             }
-            return roads.Select(r => r.OrderBy(e => e.Index).ToList()).Distinct().ToList();
+            return roads.Select(r => r.OrderBy(e => e.Index).ToList()).Distinct(new ListEdgeComparer()).ToList();
         }
 
         private static List<List<Edge>> getLongestRoad(IEnumerable<Edge> possibleEdges, IEnumerable<Edge> edges, Edge previousEdge)

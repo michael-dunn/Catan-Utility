@@ -30,15 +30,26 @@ namespace CatanUtilityTests
         [Test]
         public void CanPlaceRoad()
         {
+            var edges = new List<Edge>() {
+                new Edge() { Index = 0 },
+                new Edge() { Index = 1 },
+                null,
+                new Edge() { Index = 1 },
+                null,
+            };
+            var moreEdges = edges.Select(e => e).ToList();
 
+            var list = new List<List<Edge>>() { edges, moreEdges };
+
+            var distinctLists = list.Distinct(new ListEdgeComparer()).ToList();
+
+            Assert.IsTrue(distinctLists.Count == 1);
         }
 
         [Test]
         public void GetLongestRoad()
         {
             var roads = GameUtility.GetLongestRoad(game);
-            var ool = roads[0].Equals(roads[1]);
-            var str = "";
         }
     }
 }
