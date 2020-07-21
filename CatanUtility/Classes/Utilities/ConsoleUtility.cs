@@ -54,69 +54,89 @@ namespace CatanUtility.Classes
                     Console.WriteLine("Add players to game first");
                     return false;
                 case "p"://print
-                    switch (input[1])
+                    if (input.Length > 2)
                     {
-                        case "h"://hex
-                            hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
-                            game.Board.PrintHex(hex);
-                            return true;
-                        case "b"://board
-                            game.Board.PrintBoard();
-                            return true;
-                        case "p":
-                            switch (input[2])
-                            {
-                                case "h":
-                                    color = VerifyColorInGame(input[3], game.Players);
-                                    game.Players.FirstOrDefault(p => p.Color == color).PrintHand();
-                                    return true;
-                                case "p":
-                                    foreach (var player in game.Players)
-                                        Console.WriteLine("{0} - {1}", player.Name, player.Color);
-                                    return true;
-                                default:
-                                    Console.WriteLine("Incorrect player input (h,p)");
-                                    return false;
-                            }
-                        default:
-                            Console.WriteLine("Incorrect print type (h, b, p)");
-                            return false;
+                        switch (input[1])
+                        {
+                            case "h"://hex
+                                hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
+                                game.Board.PrintHex(hex);
+                                return true;
+                            case "b"://board
+                                game.Board.PrintBoard();
+                                return true;
+                            case "p":
+                                switch (input[2])
+                                {
+                                    case "h":
+                                        color = VerifyColorInGame(input[3], game.Players);
+                                        game.Players.FirstOrDefault(p => p.Color == color).PrintHand();
+                                        return true;
+                                    case "p":
+                                        foreach (var player in game.Players)
+                                            Console.WriteLine("{0} - {1}", player.Name, player.Color);
+                                        return true;
+                                    default:
+                                        Console.WriteLine("Incorrect player input (h,p)");
+                                        return false;
+                                }
+                            default:
+                                Console.WriteLine("Incorrect print type (h, b, p)");
+                                return false;
+                        }
                     }
+                    Console.WriteLine("Incorrect print input (h, b, p)");
+                    return false;
                 case "r"://roll
-                    diceValue = ParseIntBetweenValues(input[1], "dice value", 2, 12);
-                    Console.WriteLine("A {0} was rolled.", diceValue);
-                    game.DiceRoll(diceValue);
-                    return true;
-                case "s"://setup
-                    switch (input[1])
+                    if (input.Length == 2)
                     {
-                        case "b": //board
-                            game.Board.BuildBoard();
-                            return true;
-                        case "p": //player
-                            color = VerifyColorIsAllowed(input[3]);
-                            game.Players.Add(new Player() { Name = input[2], Color = color });
-                            return true;
-                        case "pf":
-                            game.Players = FileUtility.OpenPlayersFile();
-                            return true;
-                        default:
-                            Console.WriteLine("Incorrect setup input (b,p)");
-                            return false;
+                        diceValue = ParseIntBetweenValues(input[1], "dice value", 2, 12);
+                        Console.WriteLine("A {0} was rolled.", diceValue);
+                        game.DiceRoll(diceValue);
+                        return true;
                     }
+                    Console.WriteLine("Incorrect role input (h,r)");
+                    return false;
+                case "s"://setup
+                    if (input.Length == 2)
+                    {
+                        switch (input[1])
+                        {
+                            case "b": //board
+                                game.Board.BuildBoard();
+                                return true;
+                            case "p": //player
+                                color = VerifyColorIsAllowed(input[3]);
+                                game.Players.Add(new Player() { Name = input[2], Color = color });
+                                return true;
+                            case "pf":
+                                game.Players = FileUtility.OpenPlayersFile();
+                                return true;
+                            default:
+                                Console.WriteLine("Incorrect setup input (b,p)");
+                                return false;
+                        }
+                    }
+                    Console.WriteLine("Incorrect setup input (b, p)");
+                    return false;
                 case "q"://quit
                     game.CloseGame = true;
                     return true;
                 case "m"://manage game
-                    switch (input[1])
+                    if (input.Length == 2)
                     {
-                        case "s"://save game
-                            FileUtility.SaveGame(game);
-                            return true;
-                        default:
-                            Console.WriteLine("Incorrect manage input (s)");
-                            return false;
+                        switch (input[1])
+                        {
+                            case "s"://save game
+                                FileUtility.SaveGame(game);
+                                return true;
+                            default:
+                                Console.WriteLine("Incorrect manage input (s)");
+                                return false;
+                        }
                     }
+                    Console.WriteLine("Incorrect manage input (s)");
+                    return false;
                 case "h":
                     Console.WriteLine("Help Section");
 
@@ -147,18 +167,22 @@ namespace CatanUtility.Classes
                     Console.WriteLine("\ts- Save game (m s)");
                     return true;
                 case "v"://verify
-                    switch (input[1])
-                    {
-                        case "b"://board
-                            var hexes = game.Board.Hexes.Count() == 19;
-                            var edges = game.Board.Edges.Count() == 54;
-                            var vertices = game.Board.Vertices.Count() == 54;
-                            Console.WriteLine("Hexes: {0}, Edges: {1}, Vertices: {2}", hexes, edges, vertices);
-                            return true;
-                        default:
-                            Console.WriteLine("Incorrect verify input (b)");
-                            return false;
+                    if (input.Length == 2) {
+                        switch (input[1])
+                        {
+                            case "b"://board
+                                var hexes = game.Board.Hexes.Count() == 19;
+                                var edges = game.Board.Edges.Count() == 54;
+                                var vertices = game.Board.Vertices.Count() == 54;
+                                Console.WriteLine("Hexes: {0}, Edges: {1}, Vertices: {2}", hexes, edges, vertices);
+                                return true;
+                            default:
+                                Console.WriteLine("Incorrect verify input (b)");
+                                return false;
+                        }
                     }
+                    Console.WriteLine("Incorrect verify input (b)");
+                    return false;
                 default:
                     Console.WriteLine("Incorrect action type (b,p,r,s)");
                     return false;
