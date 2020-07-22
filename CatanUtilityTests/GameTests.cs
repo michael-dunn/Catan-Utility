@@ -24,8 +24,8 @@ namespace CatanUtilityTests
         [Test]
         public void BoardIsCorrect()
         {
-            Assert.AreEqual(game.Board.Hexes.First().Resource, CatanResourceType.Ore);
-            Assert.AreEqual(game.Board.Hexes.First().Number, 10);
+            Assert.AreEqual(CatanResourceType.Wood, game.Board.Hexes.First().Resource);
+            Assert.AreEqual(3,game.Board.Hexes.First().Number);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace CatanUtilityTests
             var position = GameUtility.GetBoardIndex(1, 3);
             game.Build(BuildType.Settlement, position, "Red");
 
-            Assert.AreEqual(game.Board.Vertices[position].BuildingType, BuildType.Settlement);
+            Assert.AreEqual(BuildType.Settlement, game.Board.Vertices[position].BuildingType);
         }
 
         [Test]
