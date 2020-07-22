@@ -22,9 +22,16 @@ namespace CatanUtilityTests
         }
 
         [Test]
-        public void CanPlaceSettlement()
+        public void CanPlaceOnVertex()
         {
-
+            string playerColor = "Red";
+            game.Build(BuildType.Settlement, game.Board.Hexes[0].VertexIndices[5], playerColor);
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[0], playerColor);
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[1], playerColor);
+            Assert.IsTrue(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[1], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[0], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[5], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[2], playerColor));
         }
 
         [Test]

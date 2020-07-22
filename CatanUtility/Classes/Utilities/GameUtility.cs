@@ -207,6 +207,25 @@ namespace CatanUtility.Classes
             board.Hexes = FileUtility.SetBoardHexIndices(board.Hexes, file + "VertexConstants.txt", file + "EdgeConstants.txt");
         }
 
+        public static bool CanPlaceOnVertex(Game game, int vertexIndex, string playerColor)
+        {
+            //Ensure vertex doesn't have building
+            if (game.Board.Vertices[vertexIndex].Occupied)
+            {
+                return false;
+            }
+            //Make sure no buildings are one vertex away
+            if (game.Board.Vertices[vertexIndex].LinkedVertices.Any(v=>game.Board.Vertices[v].Occupied))
+            {
+                return false;
+            }
+            //Make sure same color road is on at least one edge
+            if (game.Board.Vertices[vertexIndex].LinkedVertices.Any(e => GetEdgeBetweenVertices(game, e, vertexIndex).Color == playerColor))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public static bool CanPlaceRoad(Game game, int edgeIndex, string playerColor)
         {
@@ -289,6 +308,19 @@ namespace CatanUtility.Classes
                 return game.Board.Vertices[hex.VertexIndices[5]];
             }
             return game.Board.Vertices[hex.VertexIndices[smallerIndex]];
+        }
+        public static Edge GetEdgeBetweenVertices(Game game, int vertexIndex1, int vertexIndex2)
+        {
+            var hex = game.Board.Hexes.
+                    FirstOrDefault(h => h.VertexIndices.Contains(vertexIndex1) && h.VertexIndices.Contains(vertexIndex2));
+            var relativeIndex1 = hex.VertexIndices.FindIndex(v => v == vertexIndex1);
+            var relativeIndex2 = hex.VertexIndices.FindIndex(v => v == vertexIndex2);
+            var largerIndex = relativeIndex1 < relativeIndex2 ? relativeIndex2 : relativeIndex1;
+            if (relativeIndex1 == 0 && relativeIndex2 == 5)
+            {
+                return game.Board.Edges[hex.VertexIndices[0]];
+            }
+            return game.Board.Edges[hex.VertexIndices[largerIndex]];
         }
     }
 }
