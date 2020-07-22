@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CatanUtility.Classes
 {
@@ -7,6 +8,8 @@ namespace CatanUtility.Classes
         public CatanResourceType Resource { get; set; }
         public int Number { get; set; }
         public bool Robber { get; set; }
+        public List<int> EdgeIndices {get;set;}
+        public List<int> VertexIndices { get; set; }
 
         public BoardHex()
         {

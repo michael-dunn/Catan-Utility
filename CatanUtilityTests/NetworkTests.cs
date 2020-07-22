@@ -12,7 +12,7 @@ namespace CatanUtilityTests
         public void Setup()
         {
             game = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
-            GameUtility.SetupGraph(game.Board, "../../../../CatanUtility/Data/");
+            GameUtility.SetupGraph(game.Board, "../../../../CatanUtility/Data/Constants/");
         }
 
         [TearDown]
@@ -30,25 +30,26 @@ namespace CatanUtilityTests
         [Test]
         public void CanPlaceRoad()
         {
-            var edges = new List<Edge>() {
-                new Edge() { Index = 0 },
-                new Edge() { Index = 1 },
-                null,
-                new Edge() { Index = 1 },
-                null,
-            };
-            var moreEdges = edges.Select(e => e).ToList();
-
-            var list = new List<List<Edge>>() { edges, moreEdges };
-
-            var distinctLists = list.Distinct(new ListEdgeComparer()).ToList();
-
-            Assert.IsTrue(distinctLists.Count == 1);
+            string playerColor = "Red";
+            game.Build(BuildType.Settlement, game.Board.Hexes[0].VertexIndices[0], playerColor);
+            Assert.IsTrue(GameUtility.CanPlaceRoad(game, game.Board.Hexes[0].EdgeIndices[0], playerColor));
+            Assert.IsTrue(GameUtility.CanPlaceRoad(game, game.Board.Hexes[0].EdgeIndices[1], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceRoad(game, game.Board.Hexes[0].EdgeIndices[2], playerColor));
         }
 
         [Test]
         public void GetLongestRoad()
         {
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[0], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[1], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[2], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[3], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[4], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[5], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[1].EdgeIndices[0], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[1].EdgeIndices[1], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[1].EdgeIndices[2], "Red");
+            game.Build(BuildType.Road, game.Board.Hexes[2].EdgeIndices[5], "Red");
             var roads = GameUtility.GetLongestRoad(game);
         }
     }

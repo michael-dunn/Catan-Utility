@@ -200,10 +200,35 @@ namespace CatanUtility.Classes
                     .Select(hexIndices => hexIndices.index).ToList();
         }
 
-        public static void SetupGraph(Board board, string file = "../../../Data/")
+        public static void SetupGraph(Board board, string file = "../../../Data/Constants")
         {
             board.Edges = FileUtility.SetEdgeGraph(board.Edges, file + "EdgeEdges.txt");
             board.Vertices = FileUtility.SetVertexGraph(board.Vertices, file + "VertexEdges.txt");
+            board.Hexes = FileUtility.SetBoardHexIndices(board.Hexes, file + "VertexConstants.txt", file + "EdgeConstants.txt");
+        }
+
+
+        public static bool CanPlaceRoad(Game game, int edgeIndex, string playerColor)
+        {
+            //Check index doesn't already have road
+            if (game.Board.Edges[edgeIndex].Occupied)
+            {
+                return false;
+            }
+            //Check at least one edge has same color
+            //Connecting to road
+            if (game.Board.Edges[edgeIndex].LinkedEdges.Any(e=> game.Board.Edges[e].Color == playerColor))
+            {
+                return true;
+            }
+            //Otherwise, check at least one edge vertex has same color
+            //Connecting to city or settlement
+            if (game.Board.Edges[edgeIndex].LinkedEdges.Any(e=>GetVertexBetweenEdges(game,e,edgeIndex).Color == playerColor))
+            {
+                return true;
+            }
+            //If we got this far, return false
+            return false;
         }
 
         public static List<List<Edge>> GetLongestRoad(Game game)
@@ -249,6 +274,21 @@ namespace CatanUtility.Classes
                 }
             }
             return longestEdges;
+        }
+
+        public static Vertex GetVertexBetweenEdges(Game game, int edgeIndex1,int edgeIndex2)
+        {
+            var hex = game.Board.Hexes.
+                    FirstOrDefault(h => h.EdgeIndices.Contains(edgeIndex1) && h.EdgeIndices.Contains(edgeIndex2));
+            var relativeIndex1 = hex.EdgeIndices.FindIndex(r => r == edgeIndex1);
+            var relativeIndex2 = hex.EdgeIndices.FindIndex(r => r == edgeIndex2);
+            var smallerIndex = relativeIndex1 > relativeIndex2 ? relativeIndex2 : relativeIndex1;
+
+            if (relativeIndex1 == 0 && relativeIndex2 == 5)
+            {
+                return game.Board.Vertices[hex.VertexIndices[5]];
+            }
+            return game.Board.Vertices[hex.VertexIndices[smallerIndex]];
         }
     }
 }

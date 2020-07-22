@@ -117,7 +117,7 @@ namespace CatanUtility.Classes
             return Players;
         }
 
-        public static List<Edge> SetEdgeGraph(List<Edge> edges, string file = "../../../Data/EdgeEdges.txt")
+        public static List<Edge> SetEdgeGraph(List<Edge> edges, string file = "../../../Data/Constants/EdgeEdges.txt")
         {
             StreamReader sr = new StreamReader(file);
             var line = sr.ReadLine();
@@ -130,8 +130,7 @@ namespace CatanUtility.Classes
             sr.Close();
             return edges;
         }
-
-        public static List<Vertex> SetVertexGraph(List<Vertex> vertices, string file = "../../../Data/EdgeEdges.txt")
+        public static List<Vertex> SetVertexGraph(List<Vertex> vertices, string file = "../../../Data/Constants/EdgeEdges.txt")
         {
             StreamReader sr = new StreamReader(file);
             var line = sr.ReadLine();
@@ -143,6 +142,31 @@ namespace CatanUtility.Classes
             }
             sr.Close();
             return vertices;
+        }
+        public static List<BoardHex> SetBoardHexIndices(List<BoardHex> hexes, string vertexFile= "../../../Data/Constants/VertexConstants.txt", string edgeFile= "../../../Data/Constants/EdgeConstants.txt")
+        {
+            StreamReader vertexSr = new StreamReader(vertexFile);
+            StreamReader edgeSr = new StreamReader(edgeFile);
+            var vertexLine = vertexSr.ReadLine();
+            var edgeLine = edgeSr.ReadLine();
+            while (!(vertexLine == null && edgeLine ==null))
+            {
+                if (vertexLine != null)
+                {
+                    var vertexIndices = vertexLine.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
+                    hexes[vertexIndices[0]].VertexIndices = vertexIndices.Skip(1).ToList();
+                    vertexLine = vertexSr.ReadLine();
+                }
+                if (edgeLine != null)
+                {
+                    var edgeIndices = edgeLine.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
+                    hexes[edgeIndices[0]].EdgeIndices = edgeIndices.Skip(1).ToList();
+                    edgeLine = edgeSr.ReadLine();
+                }
+            }
+            vertexSr.Close();
+            edgeSr.Close();
+            return hexes;
         }
     }
 }
