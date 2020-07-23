@@ -29,6 +29,39 @@ namespace CatanUtility.Classes
             new List<int>() { 42,47,51,54,50,46 },  //19
         };
 
+        private static readonly List<List<int>> HexEdges = new List<List<int>>()
+        {
+            new List<int>() { 0,1,7,12,11,6 },
+            new List<int>() { 2,3,8,14,13,7 },
+            new List<int>() { 4,5,9,16,15,8 },
+            new List<int>() { 10,11,19,25,24,18 },
+            new List<int>() { 12,13,20,27,26,19 },
+            new List<int>() { 14,15,21,29,28,20 },
+            new List<int>() { 16,17,22,31,30,21 },
+            new List<int>() { 23,24,34,40,39,33 },
+            new List<int>() { 25,26,35,42,41,34 },
+            new List<int>() { 27,28,36,44,43,35 },
+            new List<int>() { 29,30,37,46,45,36 },
+            new List<int>() { 31,32,38,48,47,37 },
+            new List<int>() { 40,41,50,55,54,49 },
+            new List<int>() { 42,43,51,57,56,50 },
+            new List<int>() { 44,45,52,59,58,51 },
+            new List<int>() { 46,47,53,61,60,52 },
+            new List<int>() { 55,56,63,67,66,62 },
+            new List<int>() { 57,58,64,69,68,63 },
+            new List<int>() { 59,60,65,71,70,64 }
+        };
+
+        public static readonly List<List<int>> EdgeEdges = new List<List<int>>()
+        {
+
+        }
+
+        public static readonly List<List<int>> VertexEdges = new List<List<int>>()
+        {
+
+        }
+
         public static int GetBoardIndex(int hex, int position)
         {
             int topNumber = 0;
