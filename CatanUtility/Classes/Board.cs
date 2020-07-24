@@ -24,7 +24,7 @@ namespace CatanUtility.Classes
 
         public Board(string file) : this()
         {
-            GameUtility.SetupGraph(this, file);
+            GameUtility.SetupGraph(this);
         }
 
         public void PrintBoard()

@@ -171,17 +171,16 @@ namespace CatanUtility.Classes
 
         public static List<int> GetTouchingHexIndices(int vertexIndex)
         {
-            vertexIndex++;
             return HexVertices.Select((vertices, index) => new { vertices, index })
                     .Where(hexIndices => hexIndices.vertices.Contains(vertexIndex))
                     .Select(hexIndices => hexIndices.index).ToList();
         }
 
-        public static void SetupGraph(Board board, string file = "../../../Data/Constants")
+        public static void SetupGraph(Board board)
         {
-            board.Edges = FileUtility.SetEdgeGraph(board.Edges, file + "EdgeEdges.txt");
-            board.Vertices = FileUtility.SetVertexGraph(board.Vertices, file + "VertexEdges.txt");
-            board.Hexes = FileUtility.SetBoardHexIndices(board.Hexes, file + "VertexConstants.txt", file + "EdgeConstants.txt");
+            board.Edges = FileUtility.SetEdgeGraph(board.Edges);
+            board.Vertices = FileUtility.SetVertexGraph(board.Vertices);
+            board.Hexes = FileUtility.SetBoardHexIndices(board.Hexes);
         }
 
         public static bool CanPlaceOnVertex(Game game, int vertexIndex, string playerColor)
@@ -300,29 +299,29 @@ namespace CatanUtility.Classes
             return game.Board.Edges[hex.VertexIndices[largerIndex]];
         }
 
-        private static readonly List<List<int>> HexVertices = new List<List<int>>()
+        public static readonly List<List<int>> HexVertices = new List<List<int>>()
         {
-            new List<int>() { 1,5,9,13,8,4 },       //1
-            new List<int>() { 2,6,10,14,9,5 },      //2
-            new List<int>() { 3,7,11,15,10,6 },     //3
-            new List<int>() { 8,13,18,23,17,12 },   //4
-            new List<int>() { 9,14,19,24,18,13 },   //5
-            new List<int>() { 10,15,20,25,19,14 },  //6
-            new List<int>() { 11,16,21,26,20,15 },  //7
-            new List<int>() { 17,23,29,34,28,22 },  //8
-            new List<int>() { 18,24,30,35,29,23 },  //9
-            new List<int>() { 19,25,31,36,30,24 },  //10
-            new List<int>() { 20,26,32,37,31,25 },  //11
-            new List<int>() { 21,27,33,38,32,26 },  //12
-            new List<int>() { 29,35,40,44,39,34 },  //13
-            new List<int>() { 30,36,41,45,40,35 },  //14
-            new List<int>() { 31,37,42,46,41,36 },  //15
-            new List<int>() { 32,38,43,47,42,37 },  //16
-            new List<int>() { 40,45,49,52,48,44 },  //17
-            new List<int>() { 41,46,50,53,49,45 },  //18
-            new List<int>() { 42,47,51,54,50,46 },  //19
+            new List<int>() { 0,4,8,12,7,3 },
+            new List<int>() { 1,5,9,13,8,4 },
+            new List<int>() { 2,6,10,14,9,5 },
+            new List<int>() { 7,12,17,22,16,11 },
+            new List<int>() { 8,13,18,23,17,12 },
+            new List<int>() { 9,14,19,24,18,13 },
+            new List<int>() { 10,15,20,25,19,14 },
+            new List<int>() { 16,22,28,33,27,21 },
+            new List<int>() { 17,23,29,34,28,22 },
+            new List<int>() { 18,24,30,35,29,23 },
+            new List<int>() { 19,25,31,36,30,24 },
+            new List<int>() { 22,28,32,37,31,25 },
+            new List<int>() { 30,34,39,43,40,33 },
+            new List<int>() { 29,35,40,44,39,34 },
+            new List<int>() { 30,36,41,45,40,35 },
+            new List<int>() { 31,37,42,46,41,36 },
+            new List<int>() { 39,44,48,51,49,43 },
+            new List<int>() { 40,45,49,52,48,44 },
+            new List<int>() { 41,46,50,53,49,45 }
         };
-        private static readonly List<List<int>> HexEdges = new List<List<int>>()
+        public static readonly List<List<int>> HexEdges = new List<List<int>>()
         {
             new List<int>() { 0,1,7,12,11,6 },
             new List<int>() { 2,3,8,14,13,7 },

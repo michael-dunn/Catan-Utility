@@ -117,55 +117,29 @@ namespace CatanUtility.Classes
             return Players;
         }
 
-        public static List<Edge> SetEdgeGraph(List<Edge> edges, string file = "../../../Data/Constants/EdgeEdges.txt")
+        public static List<Edge> SetEdgeGraph(List<Edge> edges)
         {
-            StreamReader sr = new StreamReader(file);
-            var line = sr.ReadLine();
-            while (line != null)
+            for (int i = 0; i<  GameUtility.EdgeEdges.Count; i++)
             {
-                var ints = line.Split('\t').Where(i=>!string.IsNullOrWhiteSpace(i)).Select(i=>int.Parse(i)).ToList();
-                edges[ints[0]].LinkedEdges = ints.Skip(1).ToList();
-                line = sr.ReadLine();
+                edges[i].LinkedEdges = GameUtility.EdgeEdges[i];
             }
-            sr.Close();
             return edges;
         }
-        public static List<Vertex> SetVertexGraph(List<Vertex> vertices, string file = "../../../Data/Constants/EdgeEdges.txt")
+        public static List<Vertex> SetVertexGraph(List<Vertex> vertices)
         {
-            StreamReader sr = new StreamReader(file);
-            var line = sr.ReadLine();
-            while (line != null)
+            for (int i = 0; i < GameUtility.VertexEdges.Count; i++)
             {
-                var ints = line.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
-                vertices[ints[0]].LinkedVertices = ints.Skip(1).ToList();
-                line = sr.ReadLine();
+                vertices[i].LinkedVertices = GameUtility.VertexEdges[i];
             }
-            sr.Close();
             return vertices;
         }
-        public static List<BoardHex> SetBoardHexIndices(List<BoardHex> hexes, string vertexFile= "../../../Data/Constants/VertexConstants.txt", string edgeFile= "../../../Data/Constants/EdgeConstants.txt")
+        public static List<BoardHex> SetBoardHexIndices(List<BoardHex> hexes)
         {
-            StreamReader vertexSr = new StreamReader(vertexFile);
-            StreamReader edgeSr = new StreamReader(edgeFile);
-            var vertexLine = vertexSr.ReadLine();
-            var edgeLine = edgeSr.ReadLine();
-            while (!(vertexLine == null && edgeLine ==null))
+            for (int i = 0; i < GameUtility.HexVertices.Count; i++)
             {
-                if (vertexLine != null)
-                {
-                    var vertexIndices = vertexLine.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
-                    hexes[vertexIndices[0]].VertexIndices = vertexIndices.Skip(1).ToList();
-                    vertexLine = vertexSr.ReadLine();
-                }
-                if (edgeLine != null)
-                {
-                    var edgeIndices = edgeLine.Split('\t').Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => int.Parse(i)).ToList();
-                    hexes[edgeIndices[0]].EdgeIndices = edgeIndices.Skip(1).ToList();
-                    edgeLine = edgeSr.ReadLine();
-                }
+                hexes[i].VertexIndices = GameUtility.HexVertices[i];
+                hexes[i].EdgeIndices = GameUtility.HexEdges[i];
             }
-            vertexSr.Close();
-            edgeSr.Close();
             return hexes;
         }
     }

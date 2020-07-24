@@ -12,7 +12,7 @@ namespace CatanUtilityTests
         public void Setup()
         {
             game = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
-            GameUtility.SetupGraph(game.Board, "../../../../CatanUtility/Data/Constants/");
+            GameUtility.SetupGraph(game.Board);
         }
 
         [TearDown]
