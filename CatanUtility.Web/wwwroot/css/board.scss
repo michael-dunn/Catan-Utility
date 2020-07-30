@@ -36,6 +36,7 @@ ol.odd {
     display: inline-block;
     margin-right: 60px;
     transition: all 150ms ease-in-out;
+    z-index:-1;
 }
 
 .hex:before, .hex:after {
@@ -71,16 +72,16 @@ ol.odd {
 }
 
 .hex.water {
-    background-color: rgb(142, 142, 231);
+    background-color: #63e7f2;
 }
 
 
 .hex.Desert {
-    background-color: rgb(240, 240, 127);
+    background-color: #8d6e37;
 }
 
 .hex.Sheep {
-    background-color: green;
+    background-color: #7ed87b;
 }
 
 .hex.Ore {
@@ -88,15 +89,15 @@ ol.odd {
 }
 
 .hex.Wheat {
-    background-color: yellow;
+    background-color: #ead068;
 }
 
 .hex.Brick {
-    background-color: red;
+    background-color: brown;
 }
 
 .hex.Wood {
-    background-color: brown;
+    background-color: darkgreen;
 }
 
 /* end types of hexs */
@@ -107,7 +108,6 @@ ol.odd {
 
 .road {
     border-radius: 3px;
-    background-color: red;
     position: absolute;
     width: 9px;
     height: 58px;
@@ -138,9 +138,26 @@ ol.odd {
 }
 
 .road.tr {
-    left: 93px;
-    top: 69px;
+    left: 94px;
+    bottom: 1px;
     transform: rotate(30deg);
+}
+.road.r {
+    right: 33px;
+    top: 104px;
+    transform: rotate(90deg);
+}
+
+.road.bl {
+    right: 94px;
+    top: 1px;
+    transform: rotate(30deg);
+}
+
+.road.br {
+    right: 94px;
+    bottom: 1px;
+    transform: rotate(150deg);
 }
 
 /* end roads */
@@ -441,10 +458,29 @@ ol.odd {
     left: 100px;
 }
 
+.hex .house.tr {
+    bottom: -15px;
+    left: 65px;
+}
 .hex .house.tl {
     top: -15px;
     left: 65px;
 }
+
+.hex .house.b {
+    top: 55px;
+    right: 100px;
+}
+.hex .house.bl {
+    top: -15px;
+    right: 65px;
+}
+
+.hex .house.br {
+    bottom: -15px;
+    right: 65px;
+}
+
 /* end  houses */
 /* ----------------------------------------- */
 
@@ -502,7 +538,7 @@ ol.odd {
 
 
 /* TODO: finish the colors */
-.hex .city.red {
+/*.hex .city.red {
     background-color: #ff0000;
 }
 
@@ -520,7 +556,7 @@ ol.odd {
 
 .clear {
     clear: both;
-}
+}*/
 
 .red {
     background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
@@ -532,4 +568,8 @@ ol.odd {
 
 .blue {
     background: linear-gradient(to bottom, #49c0f0 0%,#2cafe3 100%);
+}
+
+.orange {
+    background: linear-gradient(to bottom, #ffbf5e 0%,#c77700 100%);
 }

@@ -1,14 +1,41 @@
-﻿@model CatanUtility.Classes.Game
+﻿@model CatanUtility.Web.Models.ViewModels.GameViewModel
 
 @{
     ViewData["Title"] = "Game Utility";
+    var rowClass = "";
+    var index = 0;
 }
 
 <head>
     <link rel="stylesheet" href="~/css/board.css" />
 </head>
 
-<div class="board">
+<div class="board" style="display:block">
+    @foreach(var hexRow in Model.HexRows)
+    {
+        { 
+            rowClass = index++ % 2 == 0 ? "even" : "odd";
+        }
+        <ol class="@rowClass">
+            @foreach(var hex in hexRow)
+            {
+            <li class="hex @hex.HexResource">
+                @if (!string.IsNullOrWhiteSpace(hex.HexValue))
+                {
+                    <div class="@hex.HexValue"></div>
+                    @for (int i = 0; i < hex.EdgePosition.Count; i++)
+                    {
+
+                        <div class="road @hex.EdgePosition[i] @hex.EdgeColor[i].ToLower()"></div>
+                    }
+                }
+            </li>
+            }
+        </ol>
+    }
+</div>
+
+<div class="board" style="display:none">
     
     <ol class="even">
         <li class='hex spacer'></li>
@@ -33,7 +60,7 @@
                 <div class='harbor-piece br'></div>
             </div>
         </li>
-        <li class='hex @Model.Board.Hexes[0].Resource.ToString().ToLower()'>
+        <li class='hex Wheat'>
             <div class='number two'></div>
             <div class='road tr'></div>
             <div class='road l'></div>
@@ -62,7 +89,12 @@
         </li>
         <li class='hex Sheep'>
             <div class='number four'></div>
-            <div class='house tl red'></div>
+            <div class='house t blue'></div>
+            <div class='house tr blue'></div>
+            <div class='house tl blue'></div>
+            <div class='house b blue'></div>
+            <div class='house br blue'></div>
+            <div class='house bl blue'></div>
         </li>
         <li class='hex Wood'>
             <div class='number five'></div>
@@ -70,6 +102,11 @@
         <li class='hex Sheep'>
             <div class='number five'></div>
             <div class='house t blue'></div>
+            <div class='house tr blue'></div>
+            <div class='house tl blue'></div>
+            <div class='house b blue'></div>
+            <div class='house br blue'></div>
+            <div class='house bl blue'></div>
         </li>
         <li class='hex water'>
             <div class='harbor three-one Brick'>
@@ -161,45 +198,4 @@
             </div>
         </li>
     </ol>
-</div>
-
-<div style="display:none">
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start">
-        <div>
-            <h4>Players</h4>
-            <ul>
-                @foreach (var player in Model.Players)
-                {
-                    <li>@player.Name - @player.Color</li>
-                }
-            </ul>
-        </div>
-        <div>
-            <h4>Hexes</h4>
-            <ol>
-                @foreach (var hex in Model.Board.Hexes)
-                {
-                    <li>@hex.Resource - @hex.Number</li>
-                }
-            </ol>
-        </div>
-        <div>
-            <h4>Edges</h4>
-            <ol>
-                @foreach (var edge in Model.Board.Edges)
-                {
-                    <li>@(edge.Occupied ? edge.Color + " road" : "unocuppied")</li>
-                }
-            </ol>
-        </div>
-        <div>
-            <h4>Vertices</h4>
-            <ol>
-                @foreach (var vertex in Model.Board.Vertices)
-                {
-                    <li>@(vertex.Occupied ? vertex.Color + " " + vertex.BuildingType.ToString() : "unocuppied")</li>
-                }
-            </ol>
-        </div>
-    </div>
 </div>

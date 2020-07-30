@@ -1,4 +1,4 @@
-/* ----------------------------------------- */
+﻿/* ----------------------------------------- */
 .board {
   position: relative;
   width: 1200px;
@@ -6,7 +6,7 @@
 
 ol.even {
   position: relative;
-  left: 68.1818181818px; }
+  left: 68.18182px; }
 
 ol.odd {
   position: relative;
@@ -25,7 +25,8 @@ ol.odd {
   transform: rotate(-90deg);
   display: inline-block;
   margin-right: 60px;
-  transition: all 150ms ease-in-out; }
+  transition: all 150ms ease-in-out;
+  z-index: -1; }
 
 .hex:before, .hex:after {
   position: absolute;
@@ -52,25 +53,25 @@ ol.odd {
   opacity: 0; }
 
 .hex.water {
-  background-color: #8e8ee7; }
+  background-color: #63e7f2; }
 
 .hex.Desert {
-  background-color: #f0f07f; }
+  background-color: #8d6e37; }
 
 .hex.Sheep {
-  background-color: green; }
+  background-color: #7ed87b; }
 
 .hex.Ore {
   background-color: gray; }
 
 .hex.Wheat {
-  background-color: yellow; }
+  background-color: #ead068; }
 
 .hex.Brick {
-  background-color: red; }
+  background-color: brown; }
 
 .hex.Wood {
-  background-color: brown; }
+  background-color: darkgreen; }
 
 /* end types of hexs */
 /* ----------------------------------------- */
@@ -78,7 +79,6 @@ ol.odd {
 /* begin roads */
 .road {
   border-radius: 3px;
-  background-color: red;
   position: absolute;
   width: 9px;
   height: 58px;
@@ -103,9 +103,24 @@ ol.odd {
   transform: rotate(150deg); }
 
 .road.tr {
-  left: 93px;
-  top: 69px;
+  left: 94px;
+  bottom: 1px;
   transform: rotate(30deg); }
+
+.road.r {
+  right: 33px;
+  top: 104px;
+  transform: rotate(90deg); }
+
+.road.bl {
+  right: 94px;
+  top: 1px;
+  transform: rotate(30deg); }
+
+.road.br {
+  right: 94px;
+  bottom: 1px;
+  transform: rotate(150deg); }
 
 /* end roads */
 /* ----------------------------------------- */
@@ -334,9 +349,25 @@ ol.odd {
   top: 55px;
   left: 100px; }
 
+.hex .house.tr {
+  bottom: -15px;
+  left: 65px; }
+
 .hex .house.tl {
   top: -15px;
   left: 65px; }
+
+.hex .house.b {
+  top: 55px;
+  right: 100px; }
+
+.hex .house.bl {
+  top: -15px;
+  right: 65px; }
+
+.hex .house.br {
+  bottom: -15px;
+  right: 65px; }
 
 /* end  houses */
 /* ----------------------------------------- */
@@ -386,21 +417,25 @@ ol.odd {
 /* end cities */
 /* ----------------------------------------- */
 /* TODO: finish the colors */
-.hex .city.red {
-  background-color: #ff0000; }
+/*.hex .city.red {
+    background-color: #ff0000;
+}
 
 .hex .house.red {
-  background-color: #ff0000; }
+    background-color: #ff0000;
+}
 
 .hex .city.blue {
-  background-color: #0000ff; }
+    background-color: #0000ff;
+}
 
 .hex .house.blue {
-  background-color: #0000ff; }
+    background-color: #0000ff;
+}
 
 .clear {
-  clear: both; }
-
+    clear: both;
+}*/
 .red {
   background: linear-gradient(to bottom, #ff3019 0%, #cf0404 100%); }
 
@@ -410,4 +445,5 @@ ol.odd {
 .blue {
   background: linear-gradient(to bottom, #49c0f0 0%, #2cafe3 100%); }
 
-/*# sourceMappingURL=board.css.map */
+.orange {
+  background: linear-gradient(to bottom, #ffbf5e 0%, #c77700 100%); }
