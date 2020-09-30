@@ -44,7 +44,7 @@ namespace CatanUtility.Web
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -27,5 +27,12 @@ namespace CatanUtility.Web.Controllers
             return View(new GameViewModel(game));
         }
 
+        public IActionResult GetBoard(){
+            game = FileUtility.OpenSaveGame();
+            GameUtility.SetupGraph(game.Board);
+
+            return Ok(game.Board);
+        }
+
     }
 }
