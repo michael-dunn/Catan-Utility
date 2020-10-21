@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './game/game.component';
-import { HomeComponent } from './home/home.component';
+import { GameComponent } from './modules/game/game.component';
+import { HomeComponent } from './modules/home/home.component';
+import { GameService } from './services/game.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,10 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

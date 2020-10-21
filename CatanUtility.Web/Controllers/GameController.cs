@@ -5,34 +5,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CatanUtility.Classes;
 using CatanUtility.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CatanUtility.Web.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class GameController : Controller
     {
         Game game;
         
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        public IActionResult Game()
-        {
-            game = FileUtility.OpenSaveGame();
-            GameUtility.SetupGraph(game.Board);
+        //public IActionResult Game()
+        //{
+        //    game = FileUtility.OpenSaveGame();
+        //    GameUtility.SetupGraph(game.Board);
             
-            return View(new GameViewModel(game));
-        }
-
-        public IActionResult GetBoard(){
-            game = FileUtility.OpenSaveGame();
-            GameUtility.SetupGraph(game.Board);
-
-            return Ok(game.Board);
-        }
+        //    return View(new GameViewModel(game));
+        //}
 
     }
 }

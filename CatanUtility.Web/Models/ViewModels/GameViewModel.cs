@@ -9,26 +9,26 @@ namespace CatanUtility.Web.Models.ViewModels
 {
     public class GameViewModel
     {
-        public List<List<HexViewModel>> HexRows { get; set; }
+        public List<List<HexViewModel1>> HexRows { get; set; }
 
         public GameViewModel() { }
         public GameViewModel(Game game)
         {
-            var waterHex = new HexViewModel() { HexResource = "water" };
-            var spacerHex = new HexViewModel() { HexResource = "spacer" };
-            var waterRows = new List<HexViewModel>() { spacerHex, waterHex, waterHex, waterHex, waterHex };
-            HexRows = new List<List<HexViewModel>>() {
+            var waterHex = new HexViewModel1() { HexResource = "water" };
+            var spacerHex = new HexViewModel1() { HexResource = "spacer" };
+            var waterRows = new List<HexViewModel1>() { spacerHex, waterHex, waterHex, waterHex, waterHex };
+            HexRows = new List<List<HexViewModel1>>() {
                 waterRows,
-                new List<HexViewModel>() {spacerHex, waterHex},
-                new List<HexViewModel>() {waterHex},
-                new List<HexViewModel>() {waterHex},
-                new List<HexViewModel>() {waterHex},
-                new List<HexViewModel>() {spacerHex, waterHex},
+                new List<HexViewModel1>() {spacerHex, waterHex},
+                new List<HexViewModel1>() {waterHex},
+                new List<HexViewModel1>() {waterHex},
+                new List<HexViewModel1>() {waterHex},
+                new List<HexViewModel1>() {spacerHex, waterHex},
                 waterRows
             };
             int i = 0;
             foreach (var hex in game.Board.Hexes) {
-                var newHexValues = new HexViewModel(hex, game);
+                var newHexValues = new HexViewModel1(hex, game);
                 
                 if (i >=0 && i <= 2)
                 {
