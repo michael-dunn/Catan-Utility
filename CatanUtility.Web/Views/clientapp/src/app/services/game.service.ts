@@ -13,7 +13,7 @@ export class GameService {
   }
 
   getStuff = (): Observable<any> => {
-      return this.http.get('https://localhost:5001/api/board', { headers: this.headers }).pipe(map((response: any) => {
+      return this.http.get('https://localhost:5001/api/board/GetHexes', { headers: this.headers }).pipe(map((response: any) => {
         return response;
       }));
   }

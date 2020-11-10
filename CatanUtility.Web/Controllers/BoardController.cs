@@ -14,8 +14,8 @@ namespace CatanUtility.Web.Controllers
     public class BoardController : Controller
     {
         // GET: api/values
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("GetHexes")]
+        public IActionResult GetHexes()
         {
             var game = FileUtility.OpenSaveGame();
             GameUtility.SetupGraph(game.Board);
@@ -25,7 +25,7 @@ namespace CatanUtility.Web.Controllers
             var hexes = new List<HexViewModel>();
             for (int i =0; i<game.Board.Hexes.Count; i++)
             {
-                hexes.Add(new HexViewModel());
+                hexes.Add(new HexViewModel(game.Board.Hexes[i].Number, game.Board.Hexes[i].Resource.ToString()));
                 for (int j =0; j < game.Board.Hexes[i].VertexIndices.Count; j++)
                 {
                     var vertexIndex = game.Board.Hexes[i].VertexIndices[j];

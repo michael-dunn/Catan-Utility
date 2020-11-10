@@ -8,12 +8,14 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class GameComponent implements OnInit {
 
+  hexes: any;
+
   constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
     this.gameService.getStuff().subscribe(data=> {
-      console.log(data);
-    })
+      this.hexes = data;
+    });
   }
 
 }
