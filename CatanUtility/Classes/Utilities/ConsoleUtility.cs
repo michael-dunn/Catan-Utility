@@ -54,7 +54,7 @@ namespace CatanUtility.Classes
                     Console.WriteLine("Add players to game first");
                     return false;
                 case "p"://print
-                    if (input.Length > 2)
+                    if (input.Length >= 2)
                     {
                         switch (input[1])
                         {
@@ -103,7 +103,7 @@ namespace CatanUtility.Classes
                         switch (input[1])
                         {
                             case "b": //board
-                                game.Board.BuildBoard();
+                                game.Board.PromptToBuildBoard();
                                 return true;
                             case "p": //player
                                 color = VerifyColorIsAllowed(input[3]);

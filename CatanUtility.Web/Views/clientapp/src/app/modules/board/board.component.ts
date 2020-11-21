@@ -11,12 +11,13 @@ export class BoardComponent implements OnInit {
 
   @Input() set hexes(hexes: any) {
     this._hexes = hexes;
- 
-    this.firstRowHexes = this.hexes.slice(0,3);
-    this.secondRowHexes = this.hexes.slice(3,7);
-    this.thirdRowHexes = this.hexes.slice(7,12);
-    this.fourthRowHexes = this.hexes.slice(12,16);
-    this.fifthRowHexes = this.hexes.slice(16,20);
+    if (hexes){
+      this.firstRowHexes = this.hexes.slice(0,3);
+      this.secondRowHexes = this.hexes.slice(3,7);
+      this.thirdRowHexes = this.hexes.slice(7,12);
+      this.fourthRowHexes = this.hexes.slice(12,16);
+      this.fifthRowHexes = this.hexes.slice(16,20);
+    }
  }
  
  get hexes(): any {

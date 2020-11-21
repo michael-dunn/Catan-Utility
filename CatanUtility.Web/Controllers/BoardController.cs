@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using CatanUtility.Classes;
 using CatanUtility.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +10,6 @@ namespace CatanUtility.Web.Controllers
     [Route("api/[controller]")]
     public class BoardController : Controller
     {
-        // GET: api/values
         [HttpGet("GetHexes")]
         public IActionResult GetHexes()
         {
@@ -29,53 +25,24 @@ namespace CatanUtility.Web.Controllers
                 for (int j =0; j < game.Board.Hexes[i].VertexIndices.Count; j++)
                 {
                     var vertexIndex = game.Board.Hexes[i].VertexIndices[j];
-                    if (!usedVertices.Contains(vertexIndex))
+                    if (!usedVertices.Contains(vertexIndex) && game.Board.Vertices[vertexIndex].Occupied)
                     {
-                        hexes[i].Vertices.Add(game.Board.Vertices[vertexIndex]);
-                    } else {
-                        hexes[i].Vertices.Add(new Vertex());
+                        hexes[i].Vertices.Add(new VertexViewModel(game.Board.Vertices[vertexIndex],j));
                     }
                     usedVertices.Add(vertexIndex);
                 }
                 for (int j = 0; j < game.Board.Hexes[i].EdgeIndices.Count; j++)
                 {
                     var edgeIndex = game.Board.Hexes[i].EdgeIndices[j];
-                    if (!usedEdges.Contains(edgeIndex))
+                    if (!usedEdges.Contains(edgeIndex) && game.Board.Edges[edgeIndex].Occupied)
                     {
-                        hexes[i].Edges.Add(game.Board.Edges[edgeIndex]);
-                    } else {
-                        hexes[i].Edges.Add(new Edge());
+                        hexes[i].Edges.Add(new EdgeViewModel(game.Board.Edges[edgeIndex],j));
                     }
                     usedEdges.Add(edgeIndex);
                 }
             }
 
             return Ok(hexes);
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -8,20 +8,20 @@ namespace CatanUtility.Web.Models.ViewModels
 {
     public class HexViewModel
     {
-        public List<Edge> Edges { get; set; }
-        public List<Vertex> Vertices { get; set; }
+        public List<EdgeViewModel> Edges { get; set; }
+        public List<VertexViewModel> Vertices { get; set; }
         public string Value { get; set; }
         public string ResourceType { get; set; }
 
         public HexViewModel()
         {
-            Edges = new List<Edge>();
-            Vertices = new List<Vertex>();
+            Edges = new List<EdgeViewModel>();
+            Vertices = new List<VertexViewModel>();
         }
         public HexViewModel(int number, string type)
         {
-            Edges = new List<Edge>();
-            Vertices = new List<Vertex>();
+            Edges = new List<EdgeViewModel>();
+            Vertices = new List<VertexViewModel>();
             ResourceType = type;
             switch (number)
             {
@@ -56,6 +56,70 @@ namespace CatanUtility.Web.Models.ViewModels
                     Value = "twelve";
                     break;
             }
+        }
+    }
+
+    public class EdgeViewModel
+    {
+        public string Color { get; set; }
+        public string Position { get; set; }
+        public string EdgeClass { get; set; }
+
+        public EdgeViewModel() { }
+        public EdgeViewModel(Edge _edge, int edgePosition)
+        {
+            Position = GetEdgePosition(edgePosition);
+            Color = _edge.Color.ToLower();
+            EdgeClass = "road " + Color + " " + Position;
+        }
+        private string GetEdgePosition(int position)
+        {
+            if (position == 0)
+                return "tl";
+            if (position == 1)
+                return "tr";
+            if (position == 2)
+                return "r";
+            if (position == 3)
+                return "br";
+            if (position == 4)
+                return "bl";
+            if (position == 5)
+                return "l";
+            return "";
+        }
+    }
+
+    public class VertexViewModel
+    {
+        public string Color { get; set; }
+        public string Position { get; set; }
+        public string BuildingType { get; set; }
+        public string VertexClass { get; set; }
+
+        public VertexViewModel() { }
+        public VertexViewModel(Vertex _vertex, int vertexPosition)
+        {
+            Position = GetVertexPosition(vertexPosition);
+            Color = _vertex.Color.ToLower();
+            BuildingType = _vertex.BuildingType.ToString().ToLower();
+            VertexClass = BuildingType + " " + Color + " " + Position;
+        }
+        private string GetVertexPosition(int position)
+        {
+            if (position == 0)
+                return "t";
+            if (position == 1)
+                return "tr";
+            if (position == 2)
+                return "br";
+            if (position == 3)
+                return "b";
+            if (position == 4)
+                return "bl";
+            if (position == 5)
+                return "tl";
+            return "";
         }
     }
 }

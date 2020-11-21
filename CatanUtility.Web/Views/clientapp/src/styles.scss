@@ -410,7 +410,7 @@ ol.odd {
 
 /* ----------------------------------------- */
 /* begin houses */
-.hex .house {
+.hex .settlement {
     border-top: 2px solid black;
     border-left: 2px solid black;
     border-bottom: 2px solid black;
@@ -420,7 +420,7 @@ ol.odd {
     z-index: 800;
 }
 
-.hex .house::before {
+.hex .settlement::before {
     width: 0;
     height: 0;
     border-style: solid;
@@ -430,7 +430,7 @@ ol.odd {
 }
 
 /* roof of the house */
-.hex .house::before {
+.hex .settlement::before {
     top: 2px;
     left: 14px;
     border-width: 0 12px 12px 12px;
@@ -438,49 +438,49 @@ ol.odd {
 }
 
 
-.hex .house.target {
+.hex .settlement.target {
     border: 2px dashed black;
 }
 
-.hex .house.target:hover {
+.hex .settlement.target:hover {
     background-color: yellow;
 }
 
-.hex .house.target::before {
+.hex .settlement.target::before {
     display: none;
 }
 
-.hex .house.tl.target {
+.hex .settlement.tl.target {
 }
 
-.hex .house.tr.target {
+.hex .settlement.tr.target {
 }
 
 
-.hex .house.t {
+.hex .settlement.t {
     top: 55px;
     left: 100px;
 }
 
-.hex .house.tr {
+.hex .settlement.tr {
     bottom: -15px;
     left: 65px;
 }
-.hex .house.tl {
+.hex .settlement.tl {
     top: -15px;
     left: 65px;
 }
 
-.hex .house.b {
+.hex .settlement.b {
     top: 55px;
     right: 100px;
 }
-.hex .house.bl {
+.hex .settlement.bl {
     top: -15px;
     right: 65px;
 }
 
-.hex .house.br {
+.hex .settlement.br {
     bottom: -15px;
     right: 65px;
 }
@@ -546,7 +546,7 @@ ol.odd {
     background-color: #ff0000;
 }
 
-.hex .house.red {
+.hex .settlement.red {
     background-color: #ff0000;
 }
 
@@ -554,7 +554,7 @@ ol.odd {
     background-color: #0000ff;
 }
 
-.hex .house.blue {
+.hex .settlement.blue {
     background-color: #0000ff;
 }
 

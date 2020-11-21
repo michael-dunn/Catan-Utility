@@ -74,7 +74,7 @@ namespace CatanUtility.Classes
                 Hexes.Insert(new Random().Next(1, 19), new BoardHex(CatanResourceType.Desert, 0, true));
             }
         }
-        public void BuildBoard()
+        public void PromptToBuildBoard()
         {
             Console.Write("Open saved board? (Y/N) ");
             var response = Console.Read();
