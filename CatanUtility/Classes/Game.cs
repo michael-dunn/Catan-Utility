@@ -24,27 +24,9 @@ namespace CatanUtility.Classes
 
         public void DiceRoll(int value)
         {
-            if (value == 7)
-            {
-                Console.Write("Robber moved to hex position(1-19): ");
-                int robberPosition = Board.Hexes.FindIndex(h => h.Robber);
-                int nextPosition = Console.Read();
-                if (robberPosition != nextPosition && nextPosition >= 1 && nextPosition <=19)
-                {
-                    Board.Hexes[robberPosition].Robber = false;
-                    Board.Hexes[nextPosition-1].Robber = true;
-                    Console.WriteLine("Robber moved from {0} to {1}", robberPosition + 1, nextPosition);
-                }
-                else
-                {
-                    Console.WriteLine("Robber failed to move");
-                }
-            }
-            else
-            {
-                var rolledHexIndexes = Board.Hexes.Select((hex, i) => new { hex.Number, i }).Where(h => h.Number == value).Select(h => h.i+1);
-                GivePlayersResources(rolledHexIndexes);
-            }
+            
+            var rolledHexIndexes = Board.Hexes.Select((hex, i) => new { hex.Number, i }).Where(h => h.Number == value).Select(h => h.i+1);
+            GivePlayersResources(rolledHexIndexes);
         }
 
         private void GivePlayersResources(IEnumerable<int> rolledHexIndexes)
@@ -86,7 +68,7 @@ namespace CatanUtility.Classes
             return hexandindex.OrderByDescending(h => h.score).Take(5).Select(h=>h.index).ToList();
         }
 
-        public void Build(BuildType developmentCard, string playerColor, bool free = true)
+        public void BuildDevelopmentCard(string playerColor, bool free = true)
         {
             var player = Players.First(p => p.Color == playerColor);
             if (!free)
@@ -98,7 +80,7 @@ namespace CatanUtility.Classes
             Console.WriteLine("{0} built a development card", playerColor);
         }
 
-        public void Build(BuildType buildType, int buildPosition, string playerColor, bool free = false)
+        public bool Build(BuildType buildType, int buildPosition, string playerColor, bool free = false)
         {
             var player = Players.First(p => p.Color == playerColor);
             switch (buildType)
@@ -111,7 +93,6 @@ namespace CatanUtility.Classes
                     }
                     Board.Edges[buildPosition].Color = playerColor;
                     Board.Edges[buildPosition].Occupied = true;
-                    Console.WriteLine("{0} built a road at index {1}", playerColor, buildPosition);
                     break;
                 case BuildType.Settlement:
                     if (!free)
@@ -124,7 +105,6 @@ namespace CatanUtility.Classes
                     Board.Vertices[buildPosition].BuildingType = buildType;
                     Board.Vertices[buildPosition].Color = playerColor;
                     Board.Vertices[buildPosition].Occupied = true;
-                    Console.WriteLine("{0} built a {1} at {2}", playerColor, buildType, buildPosition);
                     break;
                 case BuildType.City:
                     if (!free)
@@ -138,23 +118,13 @@ namespace CatanUtility.Classes
                     Board.Vertices[buildPosition].BuildingType = buildType;
                     Board.Vertices[buildPosition].Color = playerColor;
                     Board.Vertices[buildPosition].Occupied = true;
-                    Console.WriteLine("{0} built a {1} at {2}", playerColor, buildType, buildPosition);
                     break;
                 default:
-                    Console.WriteLine("Something broke when building");
-                    break;
+                    return false;   
             }
+            return true;
         }
 
         public bool Over() => Players.Any(p=>p.VictoryPoints>=10);
-    }
-
-    public enum BuildType
-    {
-        Road = 'R',
-        Settlement = 'S',
-        City = 'C',
-        DevelopmentCard = 'D',
-        None = 'N'
     }
 }

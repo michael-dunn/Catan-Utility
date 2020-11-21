@@ -16,13 +16,6 @@ namespace CatanUtility.Classes
             Hand = new List<Card>();
         }
 
-        public void PrintHand()
-        {
-            var orderedHand = Hand.OrderBy(h => h.Type).ToList();
-            Console.Write("{0}", orderedHand.FirstOrDefault()?.Type.ToString() ?? "No cards");
-            for (int i = 1; i < orderedHand.Count(); i++)
-                Console.Write(", {0}",orderedHand[i].Type);
-            Console.WriteLine();
-        }
+        
     }
 }

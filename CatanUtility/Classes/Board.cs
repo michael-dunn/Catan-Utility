@@ -29,11 +29,19 @@ namespace CatanUtility.Classes
 
         public void PrintBoard()
         {
-            PrintRow(Hexes.Take(3), 6);
-            PrintRow(Hexes.Skip(3).Take(4), 3);
-            PrintRow(Hexes.Skip(7).Take(5), 0);
-            PrintRow(Hexes.Skip(12).Take(4), 3);
-            PrintRow(Hexes.Skip(15).Take(3), 6);
+            if (Hexes.Count > 0)
+            {
+                PrintRow(Hexes.Take(3), 6);
+                PrintRow(Hexes.Skip(3).Take(4), 3);
+                PrintRow(Hexes.Skip(7).Take(5), 0);
+                PrintRow(Hexes.Skip(12).Take(4), 3);
+                PrintRow(Hexes.Skip(16).Take(3), 6);
+            }
+            else
+            {
+                Console.WriteLine("Board is not set up. Try setting it up with the command 's b'");
+                Console.WriteLine();
+            }
         }
 
         public void PrintHex(int hexNumber)
@@ -57,6 +65,7 @@ namespace CatanUtility.Classes
 
         public void BuildRandomBoard()
         {
+            //TODO: implement rules like 8 and 6 cannot be touching
             if (Hexes.All(h => h.Robber))
             {
                 var resources = new List<CatanResourceType>() { CatanResourceType.Brick, CatanResourceType.Brick, CatanResourceType.Brick,
@@ -76,7 +85,7 @@ namespace CatanUtility.Classes
         }
         public void PromptToBuildBoard()
         {
-            Console.Write("Open saved board? (Y/N) ");
+            Console.Write("Open saved board, if not random board will be built? (Y/N) ");
             var response = Console.Read();
             Console.WriteLine();
             if (response == 'Y')

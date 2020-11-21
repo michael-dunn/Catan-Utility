@@ -9,8 +9,12 @@ namespace CatanUtility.Classes
         public static bool GameInput(Game game)
         {
             FileUtility.SaveGame(game);
+
+            _ = Console.ReadLine();//throwaway any additional inputs
+
             Console.Write("Enter Input Here: (press h for help)");
             var input = Console.ReadLine().Split(' ');
+
             int hex, position, buildIndex, diceValue;
             string color;
             bool initialBuild = input.LastOrDefault() == "i";
@@ -26,6 +30,7 @@ namespace CatanUtility.Classes
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
                                 buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
+
                                 game.Build(BuildType.Settlement, buildIndex, color, initialBuild);
                                 return true;
                             case "r"://road
@@ -33,6 +38,7 @@ namespace CatanUtility.Classes
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
                                 buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
+
                                 game.Build(BuildType.Road, buildIndex, color, initialBuild);
                                 return true;
                             case "c"://city
@@ -40,11 +46,13 @@ namespace CatanUtility.Classes
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
                                 buildIndex = GameUtility.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
+
                                 game.Build(BuildType.City, buildIndex, color, initialBuild);
                                 return true;
                             case "d"://development card
                                 color = VerifyColorInGame(input[2], game.Players);
-                                game.Build(BuildType.DevelopmentCard, color, initialBuild);
+
+                                game.BuildDevelopmentCard(color, initialBuild);
                                 return true;
                             default:
                                 Console.WriteLine("Incorrect building type (s,r,c,d)");
@@ -60,6 +68,7 @@ namespace CatanUtility.Classes
                         {
                             case "h"://hex
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
+
                                 game.Board.PrintHex(hex);
                                 return true;
                             case "b"://board
@@ -70,7 +79,7 @@ namespace CatanUtility.Classes
                                 {
                                     case "h":
                                         color = VerifyColorInGame(input[3], game.Players);
-                                        game.Players.FirstOrDefault(p => p.Color == color).PrintHand();
+                                        PrintHand(game.Players.FirstOrDefault(p => p.Color == color));
                                         return true;
                                     case "p":
                                         foreach (var player in game.Players)
@@ -93,6 +102,7 @@ namespace CatanUtility.Classes
                         diceValue = ParseIntBetweenValues(input[1], "dice value", 2, 12);
                         Console.WriteLine("A {0} was rolled.", diceValue);
                         game.DiceRoll(diceValue);
+                        MoveRobber(game.Board,GetNextRobberPosition());
                         return true;
                     }
                     Console.WriteLine("Incorrect role input (h,r)");
@@ -202,8 +212,7 @@ namespace CatanUtility.Classes
                 return returnNum;
             Console.WriteLine("{0} is not a number", num);
             Console.Write("Enter a new number for {0}: ", numFor);
-            var input = Console.ReadLine();
-            return ParseInt(input, numFor);
+            return ParseInt(Console.ReadLine(), numFor);
         }
         public static int ParseIntBetweenValues(string num, string numFor, int min, int max)
         {
@@ -212,8 +221,7 @@ namespace CatanUtility.Classes
                 return returnNum;
             Console.WriteLine("{0} is not a number or not between {1} and {2}", num, min, max);
             Console.Write("Enter a new number for {0}: ", numFor);
-            var input = Console.ReadLine();
-            return ParseIntBetweenValues(input, numFor, min, max);
+            return ParseIntBetweenValues(Console.ReadLine(), numFor, min, max);
         }
         public static string VerifyColorInGame(string col, List<Player> players)
         {
@@ -244,5 +252,37 @@ namespace CatanUtility.Classes
             Console.Write("Enter correct color: ");
             return VerifyColorIsAllowed(Console.ReadLine());
         }
+
+        public static void PrintHand(Player player)
+        {
+            var orderedHand = player.Hand.OrderBy(h => h.Type).ToList();
+            Console.Write("{0}", orderedHand.FirstOrDefault()?.Type.ToString() ?? "No cards");
+            for (int i = 1; i < orderedHand.Count(); i++)
+                Console.Write(", {0}", orderedHand[i].Type);
+            Console.WriteLine();
+        }
+
+        public static bool MoveRobber(Board board, int newPosition)
+        {
+            int robberPosition = board.Hexes.FindIndex(h => h.Robber);
+            if (robberPosition != newPosition && newPosition >= 1 && newPosition <= 19)
+            {
+                board.Hexes[robberPosition].Robber = false;
+                board.Hexes[newPosition - 1].Robber = true;
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static int GetNextRobberPosition()
+        {
+            Console.Write("Move robber to hex position(1-19): ");
+            return ParseIntBetweenValues(Console.ReadLine(), "Robber position",1,19);
+        }
+             
+            
     }
 }
