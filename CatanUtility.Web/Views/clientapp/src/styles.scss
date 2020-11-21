@@ -76,9 +76,8 @@ ol.odd {
 }
 
 .hex.water {
-    background-color: #63e7f2;
+    background-color: #1E90FF;
 }
-
 
 .hex.Desert {
     background-color: #8d6e37;
@@ -134,13 +133,11 @@ ol.odd {
     bottom: 104px;
     transform: rotate(90deg);
 }
-
 .road.tl {
     left: 94px;
     top: 1px;
     transform: rotate(150deg);
 }
-
 .road.tr {
     left: 94px;
     bottom: 1px;
@@ -151,13 +148,11 @@ ol.odd {
     top: 104px;
     transform: rotate(90deg);
 }
-
 .road.bl {
     right: 94px;
     top: 1px;
     transform: rotate(30deg);
 }
-
 .road.br {
     right: 94px;
     bottom: 1px;
@@ -209,31 +204,26 @@ ol.odd {
     left: 30px;
     transform: rotate(60deg);
 }
-
 .harbor-piece.l {
     top: -29px;
     left: 5px;
     transform: rotate(180deg);
 }
-
 .harbor-piece.bl {
     top: 13px;
     left: 30px;
     transform: rotate(120deg);
 }
-
 .harbor-piece.tr {
     top: -73px;
     left: 80px;
     transform: rotate(300deg);
 }
-
 .harbor-piece.r {
     top: -31px;
     left: 105px;
     transform: rotate(360deg);
 }
-
 .harbor-piece.br {
     top: 13px;
     left: 80px;
@@ -243,7 +233,6 @@ ol.odd {
 .harbor.two-one::before {
     content: "2:1";
 }
-
 .harbor.three-one::before {
     content: "3:1";
 }
@@ -251,36 +240,27 @@ ol.odd {
 .harbor.any::after {
     content: "any";
 }
-
 .harbor.Wood::after {
     content: "wood";
 }
-
 .harbor.Ore::after {
     content: "ore";
 }
-
 .harbor.Sheep::after {
     content: "sheep";
 }
-
 .harbor.Brick::after {
     content: "brick";
 }
-
 .harbor.Wheat::after {
     content: "wheat";
 }
-
-
 /* end harbors */
 /* ----------------------------------------- */
 
 
 /* ----------------------------------------- */
 /* begin numbers */
-
-
 .hex .number {
     position: absolute;
     font-size: 25px;
@@ -317,96 +297,69 @@ ol.odd {
 .hex .number.two::before {
     content: "2";
 }
-
 .hex .number.two::after {
     content: ".";
 }
-
 .hex .number.three::before {
     content: "3";
 }
-
 .hex .number.three::after {
     content: "..";
 }
-
-
 .hex .number.four::before {
     content: "4";
 }
-
 .hex .number.four::after {
     content: "...";
 }
-
-
 .hex .number.five::before {
     content: "5";
 }
-
 .hex .number.five::after {
     content: "....";
 }
-
-
 .hex .number.six::before {
     content: "6";
     color: red;
 }
-
 .hex .number.six::after {
     content: ".....";
     color: red;
 }
-
-
 .hex .number.eight::before {
     content: "8";
     color: red;
 }
-
 .hex .number.eight::after {
     content: ".....";
     color: red;
 }
-
 .hex .number.nine::before {
     content: "9";
 }
-
 .hex .number.nine::after {
     content: "....";
 }
-
 .hex .number.ten::before {
     content: "10";
 }
-
 .hex .number.ten::after {
     content: "...";
 }
-
 .hex .number.eleven::before {
     content: "11";
 }
-
 .hex .number.eleven::after {
     content: "..";
 }
-
 .hex .number.twelve::before {
     content: "12";
 }
-
 .hex .number.twelve::after {
     content: ".";
 }
-
-
 /* end numbers */
 /* ----------------------------------------- */
-
-
 
 /* ----------------------------------------- */
 /* begin houses */
@@ -427,6 +380,7 @@ ol.odd {
     transform: rotate(90deg);
     content: "";
     position: absolute;
+    z-index: inherit;
 }
 
 /* roof of the house */
@@ -435,6 +389,7 @@ ol.odd {
     left: 14px;
     border-width: 0 12px 12px 12px;
     border-color: transparent transparent #000000 transparent;
+    z-index: inherit;
 }
 
 
@@ -450,18 +405,10 @@ ol.odd {
     display: none;
 }
 
-.hex .settlement.tl.target {
-}
-
-.hex .settlement.tr.target {
-}
-
-
 .hex .settlement.t {
     top: 55px;
     left: 100px;
 }
-
 .hex .settlement.tr {
     bottom: -15px;
     left: 65px;
@@ -470,7 +417,6 @@ ol.odd {
     top: -15px;
     left: 65px;
 }
-
 .hex .settlement.b {
     top: 55px;
     right: 100px;
@@ -479,12 +425,10 @@ ol.odd {
     top: -15px;
     right: 65px;
 }
-
 .hex .settlement.br {
     bottom: -15px;
     right: 65px;
 }
-
 /* end  houses */
 /* ----------------------------------------- */
 
@@ -508,6 +452,7 @@ ol.odd {
     content: "";
     position: absolute;
     background: inherit;
+    z-index: inherit;
 }
 
 .hex .city::after {
@@ -519,6 +464,7 @@ ol.odd {
     position: absolute;
     border: 2px solid black;
     background: inherit;
+    z-index: inherit;
 }
 
 .hex .city::before {
@@ -527,6 +473,7 @@ ol.odd {
     border-width: 0 12px 12px 12px;
     border-color: transparent transparent #000000 transparent;
     background: inherit;
+    z-index: inherit;
 }
 
 
@@ -542,28 +489,7 @@ ol.odd {
 /* end cities */
 /* ----------------------------------------- */
 
-
-/* TODO: finish the colors */
-/*.hex .city.red {
-    background-color: #ff0000;
-}
-
-.hex .settlement.red {
-    background-color: #ff0000;
-}
-
-.hex .city.blue {
-    background-color: #0000ff;
-}
-
-.hex .settlement.blue {
-    background-color: #0000ff;
-}
-
-.clear {
-    clear: both;
-}*/
-
+/*Colors*/
 .red {
     background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
 }
