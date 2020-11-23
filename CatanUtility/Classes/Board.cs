@@ -27,42 +27,6 @@ namespace CatanUtility.Classes
             GameUtility.SetupGraph(this);
         }
 
-        public void PrintBoard()
-        {
-            if (Hexes.Count > 0)
-            {
-                PrintRow(Hexes.Take(3), 6);
-                PrintRow(Hexes.Skip(3).Take(4), 3);
-                PrintRow(Hexes.Skip(7).Take(5), 0);
-                PrintRow(Hexes.Skip(12).Take(4), 3);
-                PrintRow(Hexes.Skip(16).Take(3), 6);
-            }
-            else
-            {
-                Console.WriteLine("Board is not set up. Try setting it up with the command 's b'");
-                Console.WriteLine();
-            }
-        }
-
-        public void PrintHex(int hexNumber)
-        {
-            Console.WriteLine("{0,25}", Vertices[GameUtility.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,15}{1,17}", Edges[GameUtility.GetBoardIndex(hexNumber, 6)], Edges[GameUtility.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,0}{1,30}", Vertices[GameUtility.GetBoardIndex(hexNumber, 6)], Vertices[GameUtility.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,15}{2,15}", Edges[GameUtility.GetBoardIndex(hexNumber, 5)], Hexes[hexNumber - 1], Edges[GameUtility.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,30}", Vertices[GameUtility.GetBoardIndex(hexNumber, 5)], Vertices[GameUtility.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,15}{1,17}", Edges[GameUtility.GetBoardIndex(hexNumber, 4)], Edges[GameUtility.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,25}", Vertices[GameUtility.GetBoardIndex(hexNumber, 4)]);
-        }
-
-        private void PrintRow(IEnumerable<BoardHex> hexLine, int startSpaces)
-        {
-            Console.Write(new string(' ', startSpaces));
-            foreach (var hex in hexLine)
-                Console.Write(hex + " ");
-            Console.WriteLine('\n');
-        }
-
         public void BuildRandomBoard()
         {
             //TODO: implement rules like 8 and 6 cannot be touching
@@ -83,19 +47,6 @@ namespace CatanUtility.Classes
                 Hexes.Insert(new Random().Next(1, 19), new BoardHex(CatanResourceType.Desert, 0, true));
             }
         }
-        public void PromptToBuildBoard()
-        {
-            Console.Write("Open saved board, if not random board will be built? (Y/N) ");
-            var response = Console.Read();
-            Console.WriteLine();
-            if (response == 'Y')
-            {
-                Hexes = FileUtility.OpenBoardFile();
-            }
-            else
-            {
-                BuildRandomBoard();
-            }
-        }
+        
     }
 }

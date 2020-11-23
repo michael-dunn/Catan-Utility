@@ -37,7 +37,7 @@ namespace CatanUtility.Classes
             }
             sw.Close();
         }
-        public static Game OpenSaveGame(string file = "../../CatanUtility/CatanUtility/Data/Game.data")
+        public static Game OpenSaveGame(string file = "../../../../../CatanUtility/CatanUtility/Data/Game.data")
         {
             StreamReader sr = new StreamReader(file);
             var game = new Game();

@@ -226,6 +226,21 @@ namespace CatanUtility.Classes
             return false;
         }
 
+        public static bool MoveRobber(Board board, int newPosition)
+        {
+            int robberPosition = board.Hexes.FindIndex(h => h.Robber);
+            if (robberPosition != newPosition && newPosition >= 1 && newPosition <= 19)
+            {
+                board.Hexes[robberPosition].Robber = false;
+                board.Hexes[newPosition - 1].Robber = true;
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static List<List<Edge>> GetLongestRoad(Game game)
         {
             var roads = new List<List<Edge>>();

@@ -10,7 +10,7 @@ namespace CatanUtility.Classes
         {
             FileUtility.SaveGame(game);
 
-            _ = Console.ReadLine();//throwaway any additional inputs
+            //_ = Console.ReadLine();//throwaway any additional inputs
 
             Console.Write("Enter Input Here: (press h for help)");
             var input = Console.ReadLine().Split(' ');
@@ -69,10 +69,10 @@ namespace CatanUtility.Classes
                             case "h"://hex
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
 
-                                game.Board.PrintHex(hex);
+                                PrintHex(game.Board,hex);
                                 return true;
                             case "b"://board
-                                game.Board.PrintBoard();
+                                PrintBoard(game.Board);
                                 return true;
                             case "p":
                                 switch (input[2])
@@ -101,8 +101,12 @@ namespace CatanUtility.Classes
                     {
                         diceValue = ParseIntBetweenValues(input[1], "dice value", 2, 12);
                         Console.WriteLine("A {0} was rolled.", diceValue);
-                        game.DiceRoll(diceValue);
-                        MoveRobber(game.Board,GetNextRobberPosition());
+                        if (diceValue != 7)
+                        {
+                            game.DiceRoll(diceValue);
+                        } else {
+                            GameUtility.MoveRobber(game.Board, GetNextRobberPosition());
+                        }
                         return true;
                     }
                     Console.WriteLine("Incorrect role input (h,r)");
@@ -113,7 +117,7 @@ namespace CatanUtility.Classes
                         switch (input[1])
                         {
                             case "b": //board
-                                game.Board.PromptToBuildBoard();
+                                PromptToBuildBoard(game.Board);
                                 return true;
                             case "p": //player
                                 color = VerifyColorIsAllowed(input[3]);
@@ -262,27 +266,62 @@ namespace CatanUtility.Classes
             Console.WriteLine();
         }
 
-        public static bool MoveRobber(Board board, int newPosition)
+        public static void PrintHex(Board board, int hexNumber)
         {
-            int robberPosition = board.Hexes.FindIndex(h => h.Robber);
-            if (robberPosition != newPosition && newPosition >= 1 && newPosition <= 19)
+            Console.WriteLine("{0,25}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 1)]);
+            Console.WriteLine("{0,15}{1,17}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 6)], board.Edges[GameUtility.GetBoardIndex(hexNumber, 1)]);
+            Console.WriteLine("{0,0}{1,30}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 6)], board.Vertices[GameUtility.GetBoardIndex(hexNumber, 2)]);
+            Console.WriteLine("{0,0}{1,15}{2,15}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 5)], board.Hexes[hexNumber - 1], board.Edges[GameUtility.GetBoardIndex(hexNumber, 2)]);
+            Console.WriteLine("{0,0}{1,30}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 5)], board.Vertices[GameUtility.GetBoardIndex(hexNumber, 3)]);
+            Console.WriteLine("{0,15}{1,17}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 4)], board.Edges[GameUtility.GetBoardIndex(hexNumber, 3)]);
+            Console.WriteLine("{0,25}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 4)]);
+        }
+
+        public static void PrintBoard(Board board)
+        {
+            if (board.Hexes.Count > 0)
             {
-                board.Hexes[robberPosition].Robber = false;
-                board.Hexes[newPosition - 1].Robber = true;
+                PrintRow(board.Hexes.Take(3), 6);
+                PrintRow(board.Hexes.Skip(3).Take(4), 3);
+                PrintRow(board.Hexes.Skip(7).Take(5), 0);
+                PrintRow(board.Hexes.Skip(12).Take(4), 3);
+                PrintRow(board.Hexes.Skip(16).Take(3), 6);
             }
             else
             {
-                return false;
+                Console.WriteLine("Board is not set up. Try setting it up with the command 's b'");
+                Console.WriteLine();
             }
-            return true;
+        }
+
+        private static void PrintRow(IEnumerable<BoardHex> hexLine, int startSpaces)
+        {
+            Console.Write(new string(' ', startSpaces));
+            foreach (var hex in hexLine)
+                Console.Write(hex + " ");
+            Console.WriteLine('\n');
         }
 
         public static int GetNextRobberPosition()
         {
             Console.Write("Move robber to hex position(1-19): ");
-            return ParseIntBetweenValues(Console.ReadLine(), "Robber position",1,19);
+            return ParseIntBetweenValues(Console.ReadLine(), "Robber position", 1, 19);
         }
-             
-            
+
+        public static void PromptToBuildBoard(Board board)
+        {
+            Console.Write("Open saved board, if not random board will be built? (Y/N) ");
+            var response = Console.Read();
+            Console.WriteLine();
+            if (response == 'Y')
+            {
+                board.Hexes = FileUtility.OpenBoardFile();
+            }
+            else
+            {
+                board.BuildRandomBoard();
+            }
+        }
+
     }
 }

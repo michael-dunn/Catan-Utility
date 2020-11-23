@@ -10,7 +10,7 @@ namespace CatanUtility
         public static void Main(string[] args)
         {
             Game game = ConsoleUtility.OpenSavedGame();
-            while (!game.Over() && !game.CloseGame)
+            while (!game.CloseGame)
             {
                 ConsoleUtility.GameInput(game);
             }

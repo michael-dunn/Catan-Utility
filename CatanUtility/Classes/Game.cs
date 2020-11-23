@@ -24,7 +24,6 @@ namespace CatanUtility.Classes
 
         public void DiceRoll(int value)
         {
-            
             var rolledHexIndexes = Board.Hexes.Select((hex, i) => new { hex.Number, i }).Where(h => h.Number == value).Select(h => h.i+1);
             GivePlayersResources(rolledHexIndexes);
         }
@@ -124,7 +123,5 @@ namespace CatanUtility.Classes
             }
             return true;
         }
-
-        public bool Over() => Players.Any(p=>p.VictoryPoints>=10);
     }
 }
