@@ -1,6 +1,4 @@
-﻿using System;
-namespace CatanUtility.Classes
-{
+﻿namespace CatanUtility.Classes.Enums { 
     public enum BuildType
     {
         Road = 'R',

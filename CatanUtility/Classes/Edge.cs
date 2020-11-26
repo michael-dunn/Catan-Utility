@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -7,8 +8,10 @@ namespace CatanUtility.Classes
 {
     public class Edge
     {
+        public int Id { get; set; }
         public bool Occupied { get; set; }
         public string Color { get; set; }
+        [NotMapped]
         public List<int> LinkedEdges { get; set; }
         public int Index { get; set; }
         public Edge() { }

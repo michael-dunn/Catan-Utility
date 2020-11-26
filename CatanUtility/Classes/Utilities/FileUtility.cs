@@ -32,7 +32,7 @@ namespace CatanUtility.Classes
                 sw.Write("{0},{1},{2}", player.Color, player.Name, player.VictoryPoints);
                 foreach (var card in player.Hand)
                 {
-                    sw.Write(",{0}", (char)card);
+                    sw.Write(",{0}", (char)card.Type);
                 }
                 sw.WriteLine();
             }
@@ -74,7 +74,7 @@ namespace CatanUtility.Classes
                 {
                     var type = (CatanResourceType)cardType.FirstOrDefault();
                     if (type != 0)
-                        player.Hand.Add(type);
+                        player.Hand.Add(new Card() { Type = type });
                 }
                 game.Players.Add(player);
                 line = sr.ReadLine();

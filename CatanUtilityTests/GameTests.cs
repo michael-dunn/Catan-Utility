@@ -41,11 +41,11 @@ namespace CatanUtilityTests
         [Test]
         public void BuildSettlementCostsCorrectCards()
         {
-            var hand = new List<CatanResourceType>() {
-                CatanResourceType.Brick,
-                CatanResourceType.Wood,
-                CatanResourceType.Wheat,
-                CatanResourceType.Sheep
+            var hand = new List<Card>() {
+                new Card() { Type = CatanResourceType.Brick },
+                new Card() { Type = CatanResourceType.Wood },
+                new Card() { Type = CatanResourceType.Wheat },
+                new Card() { Type = CatanResourceType.Sheep },
             };
             game.Players.First(p => p.Color == "Red").Hand = hand;
             Assert.AreEqual(hand, game.Players.First(p => p.Color == "Red").Hand);

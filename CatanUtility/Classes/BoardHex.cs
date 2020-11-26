@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
     public class BoardHex
     {
+        public int Id { get; set; }
         public CatanResourceType Resource { get; set; }
         public int Number { get; set; }
         public bool Robber { get; set; }
+        [NotMapped]
         public List<int> EdgeIndices {get;set;}
+        [NotMapped]
         public List<int> VertexIndices { get; set; }
 
         public BoardHex()

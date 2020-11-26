@@ -7,6 +7,7 @@ namespace CatanUtility.Classes
 {
     public class Board
     {
+        public int Id { get; set; }
         public List<BoardHex> Hexes { get; set; }
         public List<Vertex> Vertices { get; set; }
         public List<Edge> Edges { get; set; }

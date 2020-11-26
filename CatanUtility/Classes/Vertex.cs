@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
     public class Vertex
     {
+        public int Id { get; set; }
         public bool Occupied { get; set; }
         public string Color { get; set; }
         public BuildType BuildingType { get; set; }
+        [NotMapped]
         public List<int> LinkedVertices { get; set; }
         public int Index { get; set; }
 
