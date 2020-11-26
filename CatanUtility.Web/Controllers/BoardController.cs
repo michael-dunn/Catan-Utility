@@ -13,7 +13,7 @@ namespace CatanUtility.Web.Controllers
         [HttpGet("GetHexes")]
         public IActionResult GetHexes()
         {
-            var game = FileUtility.OpenSaveGame();
+            var game = FileUtility.OpenSaveGame("../../CatanUtility/CatanUtility/Data/Game.data");
             GameUtility.SetupGraph(game.Board);
 
             var usedVertices = new List<int>();

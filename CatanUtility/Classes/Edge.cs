@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace CatanUtility.Classes
 {
@@ -10,9 +11,7 @@ namespace CatanUtility.Classes
         public string Color { get; set; }
         public List<int> LinkedEdges { get; set; }
         public int Index { get; set; }
-        public Edge()
-        {
-        }
+        public Edge() { }
         public Edge(int i)
         {
             Index = i;
@@ -20,7 +19,7 @@ namespace CatanUtility.Classes
 
         public override string ToString()
         {
-            return (Color ?? "No") + " road";
+            return (!string.IsNullOrWhiteSpace(Color) ? Color : "No") + " road";
         }
     }
 
@@ -31,17 +30,21 @@ namespace CatanUtility.Classes
             if (ReferenceEquals(x, null) && ReferenceEquals(y, null))
             {
                 return true;
+            } else if (ReferenceEquals(x, null) || ReferenceEquals(y, null))
+            {
+                return false;
             }
-            if (ReferenceEquals(x, y)) return true;
+            else if (ReferenceEquals(x, y)) return true;
 
             return GetHashCode(x) == GetHashCode(y);
         }
 
-        public int GetHashCode([DisallowNull] List<Edge> obj)
+        public int GetHashCode([DisallowNull] List<Edge> edges)
         {
             int num = 0;
-            for (int i = 0; i<obj.Count; i++){
-                num += obj[i] == null ? 0 : obj[i].Index.GetHashCode() * i.GetHashCode();
+            var orderedEdges = edges.OrderBy(e => e.Index).Select(e=>e.Index).ToList();
+            for (int i = 0; i < orderedEdges.Count; i++){
+                num += orderedEdges[i] * i;
             }
             return num;
         }

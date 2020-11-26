@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
@@ -31,7 +32,7 @@ namespace CatanUtility.Classes
                 sw.Write("{0},{1},{2}", player.Color, player.Name, player.VictoryPoints);
                 foreach (var card in player.Hand)
                 {
-                    sw.Write(",{0}", (char)card.Type);
+                    sw.Write(",{0}", (char)card);
                 }
                 sw.WriteLine();
             }
@@ -73,7 +74,7 @@ namespace CatanUtility.Classes
                 {
                     var type = (CatanResourceType)cardType.FirstOrDefault();
                     if (type != 0)
-                        player.Hand.Add(new Card() { Type =  type});
+                        player.Hand.Add(type);
                 }
                 game.Players.Add(player);
                 line = sr.ReadLine();

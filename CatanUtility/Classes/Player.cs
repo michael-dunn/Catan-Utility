@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
@@ -8,14 +9,12 @@ namespace CatanUtility.Classes
     {
         public string Name { get; set; }
         public string Color { get; set; }
-        public List<Card> Hand { get; set; }
+        public List<CatanResourceType> Hand { get; set; }
         public int VictoryPoints { get; set; }
 
         public Player()
         {
-            Hand = new List<Card>();
+            Hand = new List<CatanResourceType>();
         }
-
-        
     }
 }

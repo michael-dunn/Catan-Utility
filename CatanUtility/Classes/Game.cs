@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
@@ -18,9 +19,13 @@ namespace CatanUtility.Classes
 
         public Game(string file) : this()
         {
-            Board = new Board(file);
+            SetBoardFromFile(file);
         }
 
+        public void SetBoardFromFile(string file)
+        {
+            Board = new Board(file);
+        }
 
         public void DiceRoll(int value)
         {
@@ -41,9 +46,9 @@ namespace CatanUtility.Classes
                         var player = Players.FirstOrDefault(p => p.Color.ToLower().Trim() == color.ToLower().Trim());
                         if (player != null)
                         {
-                            player.Hand.Add(new Card() { Type = Board.Hexes[hexIndex-1].Resource });
+                            player.Hand.Add(Board.Hexes[hexIndex-1].Resource);
                             if (buildingType == BuildType.City)
-                                player.Hand.Add(new Card() { Type = Board.Hexes[hexIndex-1].Resource });
+                                player.Hand.Add(Board.Hexes[hexIndex-1].Resource);
                         }
                     }
                 }
@@ -72,9 +77,9 @@ namespace CatanUtility.Classes
             var player = Players.First(p => p.Color == playerColor);
             if (!free)
             {
-                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
-                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
-                player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Sheep));
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wheat));
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Ore));
+                player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Sheep));
             }
             Console.WriteLine("{0} built a development card", playerColor);
         }
@@ -87,8 +92,8 @@ namespace CatanUtility.Classes
                 case BuildType.Road:
                     if (!free)
                     {
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c=>c.Type == CatanResourceType.Brick));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wood));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c=>c == CatanResourceType.Brick));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wood));
                     }
                     Board.Edges[buildPosition].Color = playerColor;
                     Board.Edges[buildPosition].Occupied = true;
@@ -96,10 +101,10 @@ namespace CatanUtility.Classes
                 case BuildType.Settlement:
                     if (!free)
                     {
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Brick));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wood));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Sheep));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Brick));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wood));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wheat));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Sheep));
                     }
                     Board.Vertices[buildPosition].BuildingType = buildType;
                     Board.Vertices[buildPosition].Color = playerColor;
@@ -108,11 +113,11 @@ namespace CatanUtility.Classes
                 case BuildType.City:
                     if (!free)
                     {
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Ore));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
-                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c.Type == CatanResourceType.Wheat));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Ore));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wheat));
+                        player.Hand.Remove(player.Hand.FirstOrDefault(c => c == CatanResourceType.Wheat));
                     }
                     Board.Vertices[buildPosition].BuildingType = buildType;
                     Board.Vertices[buildPosition].Color = playerColor;

@@ -75,6 +75,10 @@ namespace CatanUtility.Classes
                                 PrintBoard(game.Board);
                                 return true;
                             case "p":
+                                if (input.Count() < 3)
+                                {
+                                    return false;
+                                } 
                                 switch (input[2])
                                 {
                                     case "h":
@@ -112,7 +116,7 @@ namespace CatanUtility.Classes
                     Console.WriteLine("Incorrect role input (h,r)");
                     return false;
                 case "s"://setup
-                    if (input.Length == 2)
+                    if (input.Length > 1)
                     {
                         switch (input[1])
                         {
@@ -259,10 +263,10 @@ namespace CatanUtility.Classes
 
         public static void PrintHand(Player player)
         {
-            var orderedHand = player.Hand.OrderBy(h => h.Type).ToList();
-            Console.Write("{0}", orderedHand.FirstOrDefault()?.Type.ToString() ?? "No cards");
+            var orderedHand = player.Hand.OrderBy(h => h).ToList();
+            Console.Write("{0}", orderedHand.FirstOrDefault().ToString() ?? "No cards");
             for (int i = 1; i < orderedHand.Count(); i++)
-                Console.Write(", {0}", orderedHand[i].Type);
+                Console.Write(", {0}", orderedHand[i]);
             Console.WriteLine();
         }
 

@@ -1,4 +1,6 @@
-﻿namespace CatanUtility.Classes
+﻿using CatanUtility.Classes.Enums;
+
+namespace CatanUtility.Classes
 {
     public class Card
     {

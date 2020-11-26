@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {
@@ -27,14 +27,5 @@ namespace CatanUtility.Classes
         
     }
 
-    public enum CatanResourceType
-    {
-        Wheat = 'H',
-        Ore = 'O',
-        Brick = 'B',
-        Wood = 'W',
-        Sheep = 'S',
-        Desert = 'D'
-    };
 
 }
