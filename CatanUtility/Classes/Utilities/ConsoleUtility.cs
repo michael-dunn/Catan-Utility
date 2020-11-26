@@ -202,6 +202,26 @@ namespace CatanUtility.Classes
                     }
                     Console.WriteLine("Incorrect verify input (b)");
                     return false;
+                case "g"://get
+                    if (input.Count() > 1)
+                    {
+                        switch (input[1])
+                        {
+                            case "s"://best spots
+                                var bestVertices = game.GetBestVertices();
+                                for (int i = 0; i < bestVertices.Count() - 1; i++)
+                                {
+                                    Console.Write("{0}, ", bestVertices[i]);
+                                }
+                                Console.WriteLine("{0}", bestVertices.Last());
+                                return true;
+                            default:
+                                Console.WriteLine("Incorrect verify input (g)");
+                                return false;
+                        }
+                    }
+                    Console.WriteLine("Incorrect verify input (g)");
+                    return false;
                 default:
                     Console.WriteLine("Incorrect action type (b,p,r,s)");
                     return false;

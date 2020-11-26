@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Hex } from 'src/app/models/hex';
 
 @Component({
   selector: 'app-board',
@@ -7,9 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  private _hexes: string;
+  private _hexes: Hex[];
 
-  @Input() set hexes(hexes: any) {
+  @Input() set hexes(hexes: Hex[]) {
     this._hexes = hexes;
     if (hexes){
       this.firstRowHexes = this.hexes.slice(0,3);
@@ -20,15 +21,15 @@ export class BoardComponent implements OnInit {
     }
  }
  
- get hexes(): any {
+ get hexes(): Hex[] {
      return this._hexes;
  }
 
-  firstRowHexes: any;
-  secondRowHexes: any;
-  thirdRowHexes: any;
-  fourthRowHexes: any;
-  fifthRowHexes: any;
+  firstRowHexes: Hex[];
+  secondRowHexes: Hex[];
+  thirdRowHexes: Hex[];
+  fourthRowHexes: Hex[];
+  fifthRowHexes: Hex[];
 
   constructor() { }
 

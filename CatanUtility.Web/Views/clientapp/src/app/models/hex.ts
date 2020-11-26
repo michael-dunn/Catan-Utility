@@ -1,4 +1,7 @@
+import { Edge } from './edge';
+import { Vertex } from './vertex';
+
 export class Hex {
-    value: number;
-    resource: string;
+    edges: Edge[];
+    vertices: Vertex[];
 }

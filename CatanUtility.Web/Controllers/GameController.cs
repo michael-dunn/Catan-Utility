@@ -1,34 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using CatanUtility.Classes;
+using CatanUtility.Web.Models;
 using CatanUtility.Web.Models.ViewModels;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CatanUtility.Web.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class GameController : Controller
     {
-        Game game;
-        
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        private GameContext db = new GameContext();
 
-        //public IActionResult Game()
-        //{
-        //    game = FileUtility.OpenSaveGame();
-        //    GameUtility.SetupGraph(game.Board);
-            
-        //    return View(new GameViewModel(game));
-        //}
+        [HttpGet("GetNewGame")]
+        public IActionResult GetNewGame()
+        {
+            var entityGame = db.Add(new Game()).Entity;
+            db.SaveChanges();
 
+            return Ok(entityGame);
+        }
+
+        [HttpGet("GetGame")]
+        public IActionResult GetGame(int Id)
+        {
+            var dbGame = db.Games.FirstOrDefault(g => g.Id == Id);
+            if (dbGame != null)
+            {
+                return Ok(new GameViewModel(dbGame));
+            }
+            return Ok("No data found");
+        }
+
+        [HttpGet("DeleteAllGames")]
+        public IActionResult DeleteAllGames()
+        {
+            db.RemoveRange(db.Games.ToList());
+            db.SaveChanges();
+            return Ok();
+        }
     }
 }

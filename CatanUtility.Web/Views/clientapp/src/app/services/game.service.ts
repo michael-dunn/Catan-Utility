@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map} from 'rxjs/operators';
+import { Game } from '../models/game';
 
 
 @Injectable()
@@ -12,10 +13,22 @@ export class GameService {
     this.headers.append('Content-Type','application/json');
   }
 
-  getStuff = (): Observable<any> => {
-      return this.http.get('https://localhost:5001/api/board/GetHexes', { headers: this.headers }).pipe(map((response: any) => {
-        return response;
+  GetNewGame = (): Observable<Game> => {
+    return this.http.get('https://localhost:5001/api/game/GetNewGame', { headers: this.headers }).pipe(map((response: any) => {
+      return response as Game;
+    }));
+  }
+
+  GetGame = (id: number): Observable<Game> => {
+      return this.http.get(`https://localhost:5001/api/game/GetGame?id=${id}`, { headers: this.headers }).pipe(map((response: any) => {
+        return response as Game;
       }));
   }
+
+  DeleteAllGames = (): Observable<any> => {
+    return this.http.get('https://localhost:5001/api/game/DeleteAllGames', { headers: this.headers }).pipe(map((response: any) => {
+      return response;
+    }));
+}
 
 }

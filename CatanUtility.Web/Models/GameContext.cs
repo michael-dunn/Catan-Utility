@@ -5,11 +5,20 @@ namespace CatanUtility.Web.Models
 {
     public class GameContext : DbContext
     {
-public DbSet<Game> Games { get; set; }
+        public GameContext(DbContextOptions<GameContext> options)
+            : base(options)
+        {
+        }
+
+        public GameContext()
+        {
+
+        }
+
+        public DbSet<Game> Games { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Kellertim;Trusted_Connection=True;MultipleActiveResultSets=true");
             optionsBuilder.UseSqlite("Data Source = Catan.db");
         }
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from 'src/app/models/game';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -8,13 +9,17 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class GameComponent implements OnInit {
 
-  hexes: any;
+  game: Game;
 
   constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
-    this.gameService.getStuff().subscribe(data=> {
-      this.hexes = data;
+    // this.gameService.GetNewGame().subscribe(data => {
+    //   this.game = data;
+    // });
+
+    this.gameService.GetGame(0).subscribe(data => {
+      this.game = data;
     });
   }
 

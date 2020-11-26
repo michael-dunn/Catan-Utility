@@ -1,5 +1,6 @@
 import { Hex } from './hex';
 
-export class Board {
+export class Game {
+    id: number;
     hexes: Hex[];
 }
