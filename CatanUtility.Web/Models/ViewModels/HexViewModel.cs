@@ -12,6 +12,7 @@ namespace CatanUtility.Web.Models.ViewModels
         public List<VertexViewModel> Vertices { get; set; }
         public string Value { get; set; }
         public string ResourceType { get; set; }
+        public int Index { get; set; }
 
         public HexViewModel()
         {

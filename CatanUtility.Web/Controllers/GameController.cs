@@ -4,6 +4,7 @@ using CatanUtility.Classes;
 using CatanUtility.Web.Models;
 using CatanUtility.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +15,7 @@ namespace CatanUtility.Web.Controllers
     {
         private GameContext db = new GameContext();
 
-        [HttpGet("GetNewGame")]
+        [HttpGet("{action}")]
         public IActionResult GetNewGame()
         {
             var entityGame = db.Add(new Game()).Entity;
@@ -23,7 +24,7 @@ namespace CatanUtility.Web.Controllers
             return Ok(entityGame);
         }
 
-        [HttpGet("GetGame")]
+        [HttpGet("{action}")]
         public IActionResult GetGame(int Id)
         {
             var dbGame = db.Games.FirstOrDefault(g => g.Id == Id);
@@ -34,11 +35,18 @@ namespace CatanUtility.Web.Controllers
             return Ok("No data found");
         }
 
-        [HttpGet("DeleteAllGames")]
+        [HttpGet("{action}")]
         public IActionResult DeleteAllGames()
         {
-            db.RemoveRange(db.Games.ToList());
+            db.RemoveRange(db.Games.Include(g=>g.Board).ToList());
             db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost("{action}")]
+        public IActionResult SetHex(int boardId, [FromBody] HexViewModel hexViewModel)
+        {
+
             return Ok();
         }
     }

@@ -1,1 +1,10 @@
-<app-board [hexes]="game.hexes"></app-board>
+<div class="row">
+    <div class="col-md-8">
+        <app-board [hexes]="game.hexes"></app-board>
+    </div>
+    <div class="col-md-4">
+       <div class="col-md-8">
+           <button class="btn" type="button" (click)="getNewGame()">Get New Game</button>
+        </div>
+    </div>
+</div>
