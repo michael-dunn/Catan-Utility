@@ -20,23 +20,29 @@ namespace CatanUtility.Web.Models.ViewModels
             for (int i = 0; i < game.Board.Hexes.Count; i++)
             {
                 Hexes.Add(new HexViewModel(game.Board.Hexes[i].Number, game.Board.Hexes[i].Resource.ToString()));
-                for (int j = 0; j < game.Board.Hexes[i].VertexIndices.Count; j++)
+                if (game.Board.Hexes[i].VertexIndices != null)
                 {
-                    var vertexIndex = game.Board.Hexes[i].VertexIndices[j];
-                    if (!usedVertices.Contains(vertexIndex) && game.Board.Vertices[vertexIndex].Occupied)
+                    for (int j = 0; j < game.Board.Hexes[i].VertexIndices.Count; j++)
                     {
-                        Hexes[i].Vertices.Add(new VertexViewModel(game.Board.Vertices[vertexIndex], j));
+                        var vertexIndex = game.Board.Hexes[i].VertexIndices[j];
+                        if (!usedVertices.Contains(vertexIndex) && game.Board.Vertices[vertexIndex].Occupied)
+                        {
+                            Hexes[i].Vertices.Add(new VertexViewModel(game.Board.Vertices[vertexIndex], j));
+                        }
+                        usedVertices.Add(vertexIndex);
                     }
-                    usedVertices.Add(vertexIndex);
                 }
-                for (int j = 0; j < game.Board.Hexes[i].EdgeIndices.Count; j++)
+                if (game.Board.Hexes[i].EdgeIndices != null)
                 {
-                    var edgeIndex = game.Board.Hexes[i].EdgeIndices[j];
-                    if (!usedEdges.Contains(edgeIndex) && game.Board.Edges[edgeIndex].Occupied)
+                    for (int j = 0; j < game.Board.Hexes[i].EdgeIndices.Count; j++)
                     {
-                        Hexes[i].Edges.Add(new EdgeViewModel(game.Board.Edges[edgeIndex], j));
+                        var edgeIndex = game.Board.Hexes[i].EdgeIndices[j];
+                        if (!usedEdges.Contains(edgeIndex) && game.Board.Edges[edgeIndex].Occupied)
+                        {
+                            Hexes[i].Edges.Add(new EdgeViewModel(game.Board.Edges[edgeIndex], j));
+                        }
+                        usedEdges.Add(edgeIndex);
                     }
-                    usedEdges.Add(edgeIndex);
                 }
             }
         }

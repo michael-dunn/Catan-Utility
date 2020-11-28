@@ -23,7 +23,7 @@ namespace CatanUtility.Web.Models.ViewModels
         {
             Edges = new List<EdgeViewModel>();
             Vertices = new List<VertexViewModel>();
-            ResourceType = type;
+            ResourceType = !string.IsNullOrWhiteSpace(type) ? type : "notset";
             switch (number)
             {
                 case 2:

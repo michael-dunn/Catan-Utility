@@ -20,6 +20,7 @@ namespace CatanUtility.Classes
             for (int i = 0; i < 72; i++)
             {
                 if (i < 54) { Vertices.Add(new Vertex(i)); }
+                if (i < 19) { Hexes.Add(new BoardHex()); }
                 Edges.Add(new Edge(i));
             }
         }

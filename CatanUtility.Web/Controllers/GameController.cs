@@ -21,7 +21,7 @@ namespace CatanUtility.Web.Controllers
             var entityGame = db.Add(new Game()).Entity;
             db.SaveChanges();
 
-            return Ok(entityGame);
+            return Ok(new GameViewModel(entityGame));
         }
 
         [HttpGet("{action}")]
@@ -44,7 +44,7 @@ namespace CatanUtility.Web.Controllers
         }
 
         [HttpPost("{action}")]
-        public IActionResult SetHex(int boardId, [FromBody] HexViewModel hexViewModel)
+        public IActionResult SetHex([FromBody] HexViewModel hexViewModel)
         {
 
             return Ok();
