@@ -120,7 +120,7 @@ namespace CatanUtility.Classes
 
         public static List<Edge> SetEdgeGraph(List<Edge> edges)
         {
-            for (int i = 0; i<  GameUtility.EdgeEdges.Count; i++)
+            for (int i = 0; i < GameUtility.EdgeEdges.Count; i++)
             {
                 edges[i].LinkedEdges = GameUtility.EdgeEdges[i];
             }

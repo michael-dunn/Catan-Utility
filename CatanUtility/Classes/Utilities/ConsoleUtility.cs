@@ -124,6 +124,9 @@ namespace CatanUtility.Classes
                             case "b": //board
                                 PromptToBuildBoard(game.Board);
                                 return true;
+                            case "h": //harbor
+                                PromptToAddHarbor(game.Board);
+                                return true;
                             case "p": //player
                                 color = VerifyColorIsAllowed(input[3]);
                                 game.Players.Add(new Player() { Name = input[2], Color = color });
@@ -252,6 +255,17 @@ namespace CatanUtility.Classes
             Console.Write("Enter a new number for {0}: ", numFor);
             return ParseIntBetweenValues(Console.ReadLine(), numFor, min, max);
         }
+        public static HarborType ParseHarborType(string harborType)
+        {
+            if (Enum.IsDefined(typeof(HarborType), (HarborType)harborType.First()))
+            {
+                return (HarborType)harborType.First();
+            }
+            Console.WriteLine("{0} is not a Harbor Type", harborType);
+            Console.WriteLine("Harbor Types: Sheep = 'S', Wheat = 'H', Ore = 'O', Brick = 'B', Wood = 'W', Any = 'A'");
+            Console.Write("Enter a new char for harbor type: ");
+            return ParseHarborType(Console.ReadLine());
+        }
         public static string VerifyColorInGame(string col, List<Player> players)
         {
             if (players.Any(p => p.Color == col))
@@ -346,6 +360,29 @@ namespace CatanUtility.Classes
             {
                 board.BuildRandomBoard();
             }
+        }
+
+        public static void PromptToAddHarbor(Board board)
+        {
+            Console.WriteLine("Harbor Types: Sheep = 'S', Wheat = 'H', Ore = 'O', Brick = 'B', Wood = 'W', Any = 'A'");
+            Console.Write("To add a harbor, provide hex number, edge index, and type like 'h,e,t'");
+
+            int hexNumber, edgeIndex;
+            HarborType harborType;
+
+            var input = Console.ReadLine();
+            var splitInput = input.Replace(' ', '\0').Split(",");
+            do {
+                hexNumber = ParseIntBetweenValues(splitInput[0], "Hex", 1, 19);
+                edgeIndex = ParseIntBetweenValues(splitInput[1], "Edge", 1, 6);
+                harborType = ParseHarborType(splitInput[2]);
+            } while (splitInput.Count() != 3);
+
+            Console.WriteLine("Adding harbor {0} {1} to hex {2}, edge {3}",
+                harborType.ToString(), harborType == HarborType.Any ? "3:1" : "2:1", hexNumber, edgeIndex);
+
+
+            board.AddHarbor(hexNumber, edgeIndex, harborType);
         }
 
     }

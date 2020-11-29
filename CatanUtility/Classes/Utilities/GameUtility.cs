@@ -8,7 +8,7 @@ namespace CatanUtility.Classes
     {
         public static int GetBoardIndex(int hex, int position)
         {
-            int topNumber = 0;
+            int topNumber;
             int returnNumber = 0;
             if (1 <= hex && hex <= 3)
             {

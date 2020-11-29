@@ -11,12 +11,14 @@ namespace CatanUtility.Classes
         public List<BoardHex> Hexes { get; set; }
         public List<Vertex> Vertices { get; set; }
         public List<Edge> Edges { get; set; }
+        public List<Harbor> Harbors { get; set; }
 
         public Board()
         {
             Hexes = new List<BoardHex>();
             Vertices = new List<Vertex>();
             Edges = new List<Edge>();
+            Harbors = new List<Harbor>();
             for (int i = 0; i < 72; i++)
             {
                 if (i < 54) { Vertices.Add(new Vertex(i)); }
@@ -41,8 +43,10 @@ namespace CatanUtility.Classes
                                                             CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood,
                                                             CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep };
                 var values = new List<int>() { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
+                //randomize lists
                 resources = resources.OrderBy(a => Guid.NewGuid()).ToList();
                 values = values.OrderBy(a => Guid.NewGuid()).ToList();
+                //create board
                 for (int i = 0; i < 18; i++)
                 {
                     Hexes.Add(new BoardHex(resources[i], values[i], false));
@@ -50,6 +54,10 @@ namespace CatanUtility.Classes
                 Hexes.Insert(new Random().Next(1, 19), new BoardHex(CatanResourceType.Desert, 0, true));
             }
         }
-        
+
+        public void AddHarbor(int hexNumber, int edgeIndex, HarborType harborType)
+        {
+            Harbors.Add(new Harbor(Edges[GameUtility.HexEdges[hexNumber][edgeIndex]], harborType));
+        }
     }
 }
