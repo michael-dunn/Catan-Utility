@@ -14,6 +14,12 @@ export class GameService {
     this.headers.append('Content-Type','application/json');
   }
 
+  GetTestGame = (): Observable<Game> => {
+    return this.http.get('https://localhost:5001/api/game/GetTestGame', { headers: this.headers }).pipe(map((response: any) => {
+      return response as Game;
+    }));
+  }
+
   GetNewGame = (): Observable<Game> => {
     return this.http.get('https://localhost:5001/api/game/GetNewGame', { headers: this.headers }).pipe(map((response: any) => {
       return response as Game;

@@ -478,15 +478,25 @@ ol.odd {
     z-index: inherit;
 }
 
-
-.hex .city.t {
-    top: 55px;
-    left: 100px;
+.hex .city.tr {
+    bottom: -15px;
+    left: 65px;
 }
-
 .hex .city.tl {
     top: -15px;
     left: 65px;
+}
+.hex .city.b {
+    top: 55px;
+    right: 100px;
+}
+.hex .city.bl {
+    top: -15px;
+    right: 65px;
+}
+.hex .city.br {
+    bottom: -15px;
+    right: 65px;
 }
 /* end cities */
 /* ----------------------------------------- */

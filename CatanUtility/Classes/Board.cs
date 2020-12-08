@@ -29,30 +29,32 @@ namespace CatanUtility.Classes
 
         public Board(string file) : this()
         {
+            Hexes = FileUtility.OpenBoardFile(file);
+            Vertices = new List<Vertex>();
+            Edges = new List<Edge>();
+            Harbors = new List<Harbor>();
             GameUtility.SetupGraph(this);
         }
 
         public void BuildRandomBoard()
         {
             //TODO: implement rules like 8 and 6 cannot be touching
-            if (Hexes.All(h => h.Robber))
+            Hexes = new List<BoardHex>();
+            var resources = new List<CatanResourceType>() { CatanResourceType.Brick, CatanResourceType.Brick, CatanResourceType.Brick,
+                                                        CatanResourceType.Ore, CatanResourceType.Ore, CatanResourceType.Ore,
+                                                        CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat,
+                                                        CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood,
+                                                        CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep };
+            var values = new List<int>() { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
+            //randomize lists
+            resources = resources.OrderBy(a => Guid.NewGuid()).ToList();
+            values = values.OrderBy(a => Guid.NewGuid()).ToList();
+            //create board
+            for (int i = 0; i < 18; i++)
             {
-                var resources = new List<CatanResourceType>() { CatanResourceType.Brick, CatanResourceType.Brick, CatanResourceType.Brick,
-                                                            CatanResourceType.Ore, CatanResourceType.Ore, CatanResourceType.Ore,
-                                                            CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat,
-                                                            CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood,
-                                                            CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep };
-                var values = new List<int>() { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
-                //randomize lists
-                resources = resources.OrderBy(a => Guid.NewGuid()).ToList();
-                values = values.OrderBy(a => Guid.NewGuid()).ToList();
-                //create board
-                for (int i = 0; i < 18; i++)
-                {
-                    Hexes.Add(new BoardHex(resources[i], values[i], false));
-                }
-                Hexes.Insert(new Random().Next(1, 19), new BoardHex(CatanResourceType.Desert, 0, true));
+                Hexes.Add(new BoardHex(resources[i], values[i], false));
             }
+            Hexes.Insert(new Random().Next(0, 19), new BoardHex(CatanResourceType.Desert, 0, true));
         }
 
         public void AddHarbor(int hexNumber, int edgeIndex, HarborType harborType)

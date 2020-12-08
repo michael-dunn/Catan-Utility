@@ -1,52 +1,24 @@
 <div class="board">
     <ol class="even">
-        <li class='hex spacer'></li>
-        <li class='hex water'></li>
-        <li class='hex water'></li>
-        <li class='hex water'></li>
-        <li class='hex water'></li>
-    </ol>
-    <ol class="odd">
-        <li class='hex spacer'></li>
-        <li class='hex water'></li>
         <app-hex *ngFor="let hex of firstRowHexes" [hex]="hex"></app-hex>
-        <li class='hex water'></li>
     </ol>
-    <ol class="even">
-        <li class='hex water'></li>
+    <ol class="odd">
         <app-hex *ngFor="let hex of secondRowHexes" [hex]="hex"></app-hex>
-        <li class='hex water'></li>
     </ol>
-    <ol class="odd">
-        <li class='hex water'></li>
+    <ol class="even">
         <app-hex *ngFor="let hex of thirdRowHexes" [hex]="hex"></app-hex>
-        <li class='hex water'></li>
-    </ol>
-    <ol class="even">
-        <li class='hex water'></li>
-        <app-hex *ngFor="let hex of fourthRowHexes" [hex]="hex"></app-hex>
-        <li class='hex water'></li>
     </ol>
     <ol class="odd">
-        <li class='hex spacer'></li>
-        <li class='hex water'></li>
-        <app-hex *ngFor="let hex of fifthRowHexes" [hex]="hex"></app-hex>
-        <li class='hex water'></li>
+        <app-hex *ngFor="let hex of fourthRowHexes" [hex]="hex"></app-hex>
     </ol>
     <ol class="even">
-        <li class='hex spacer'></li>
-        <li class='hex water'></li>
-        <li class='hex water'>
-            <div class='harbor two-one any'>
-                <div class='harbor-piece tr'></div>
-            </div>
-        </li>
-        <li class='hex water'></li>
-        <li class='hex water'>
-            <div class='harbor three-one Wood'>
-                <div class='harbor-piece tl'></div>
-            </div>
-        </li>
+        <app-hex *ngFor="let hex of fifthRowHexes" [hex]="hex"></app-hex>
+    </ol>
+    <ol class="odd">
+        <app-hex *ngFor="let hex of sixthRowHexes" [hex]="hex"></app-hex>
+    </ol>
+    <ol class="even">
+        <app-hex *ngFor="let hex of seventhRowHexes" [hex]="hex"></app-hex>
     </ol>
 </div>
 <div class="board" style="display: none;">

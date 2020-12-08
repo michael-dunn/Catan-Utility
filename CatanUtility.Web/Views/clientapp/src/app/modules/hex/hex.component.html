@@ -1,5 +1,5 @@
 <li class="hex {{hex.resourceType}}">
-    <div class="number {{hex.value}}"></div>
+    <div *ngIf="hex.value" class="number {{hex.value}}"></div>
     <div *ngFor="let edge of hex.edges" [ngClass]="[edge.edgeClass]"></div>
     <div *ngFor="let vertex of hex.vertices" [ngClass]="[vertex.vertexClass]"></div>
 </li>
