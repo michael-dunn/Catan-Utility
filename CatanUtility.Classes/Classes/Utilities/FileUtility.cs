@@ -38,7 +38,7 @@ namespace CatanUtility.Classes
             }
             sw.Close();
         }
-        public static Game OpenSaveGame(string file = "../../../../../CatanUtility/CatanUtility/Data/Game.data")
+        public static Game OpenSaveGame(string file = "../../../../../CatanUtility/CatanUtility.Console/Data/Game.data")
         {
             StreamReader sr = new StreamReader(file);
             var game = new Game();
@@ -46,23 +46,34 @@ namespace CatanUtility.Classes
             for (int i = 0; i< 19; i++)
             {
                 var hexValues = sr.ReadLine().Split(',');
-                game.Board.Hexes.Add(new BoardHex() { Number = int.Parse(hexValues[0]), Resource = (CatanResourceType)hexValues[1].First(), Robber = bool.Parse(hexValues[2]) });
+                game.Board.Hexes.Add(new BoardHex()
+                {
+                    Number = int.Parse(hexValues[0]),
+                    Resource = (CatanResourceType)hexValues[1].First(),
+                    Robber = bool.Parse(hexValues[2])
+                });
             }
             sr.ReadLine();
             for (int i = 0; i < 72; i++)
             {
                 var edgeValues = sr.ReadLine().Split(',');
-                game.Board.Edges[i].Color = edgeValues[0];
-                game.Board.Edges[i].Occupied = bool.Parse(edgeValues[1]);
+                game.Board.Edges.Add(new Edge()
+                {
+                    Color = edgeValues[0],
+                    Occupied = bool.Parse(edgeValues[1])
+                });
             }
             sr.ReadLine();
             for (int i = 0; i < 54; i++)
             {
                 var stringvalue = sr.ReadLine();
                 var vertexValues = stringvalue.Split(',');
-                game.Board.Vertices[i].Color = vertexValues[0];
-                game.Board.Vertices[i].BuildingType = (BuildType)vertexValues[1].FirstOrDefault();
-                game.Board.Vertices[i].Occupied = bool.Parse(vertexValues[2]);
+                game.Board.Vertices.Add(new Vertex()
+                {
+                    Color = vertexValues[0],
+                    BuildingType = (BuildType)vertexValues[1].FirstOrDefault(),
+                    Occupied = bool.Parse(vertexValues[2])
+                });
             }
             sr.ReadLine();
             var line = sr.ReadLine();

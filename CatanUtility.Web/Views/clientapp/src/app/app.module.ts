@@ -9,6 +9,7 @@ import { GameService } from './services/game.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BoardComponent } from './modules/board/board.component';
 import { HexComponent } from './modules/hex/hex.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HexComponent } from './modules/hex/hex.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [GameService],
   bootstrap: [AppComponent]

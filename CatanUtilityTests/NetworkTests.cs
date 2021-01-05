@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CatanUtility.Classes;
 using System.Linq;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace CatanUtilityTests
         [SetUp]
         public void Setup()
         {
-            game = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
+            game = FileUtility.OpenSaveGame("../../../../CatanUtility.Console/Data/TestGame.data");
             GameUtility.SetupGraph(game.Board);
         }
 
@@ -26,13 +26,13 @@ namespace CatanUtilityTests
         public void CanPlaceOnVertex()
         {
             string playerColor = "Red";
-            game.Build(BuildType.Settlement, game.Board.Hexes[0].VertexIndices[5], playerColor);
-            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[0], playerColor);
-            game.Build(BuildType.Road, game.Board.Hexes[0].EdgeIndices[1], playerColor);
-            Assert.IsTrue(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[1], playerColor));
-            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[0], playerColor));
-            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[5], playerColor));
-            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, game.Board.Hexes[0].VertexIndices[2], playerColor));
+            Assert.IsTrue(game.Build(BuildType.Settlement, GameUtility.HexVertices[0][5], playerColor, true));
+            Assert.IsTrue(game.Build(BuildType.Road, GameUtility.HexEdges[0][0], playerColor, true));
+            Assert.IsTrue(game.Build(BuildType.Road, GameUtility.HexEdges[0][1], playerColor, true));
+            Assert.IsTrue(GameUtility.CanPlaceOnVertex(game, GameUtility.HexVertices[0][1], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, GameUtility.HexVertices[0][0], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, GameUtility.HexVertices[0][5], playerColor));
+            Assert.IsFalse(GameUtility.CanPlaceOnVertex(game, GameUtility.HexVertices[0][2], playerColor));
         }
 
         [Test]

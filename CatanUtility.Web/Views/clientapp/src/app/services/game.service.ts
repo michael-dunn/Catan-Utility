@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map} from 'rxjs/operators';
 import { Game } from '../models/game';
 import { Hex } from '../models/hex';
+import { BuildingForm } from '../models/buildingForm';
 
 
 @Injectable()
@@ -40,6 +41,12 @@ export class GameService {
 
   SetHex = (boardId: number, hex: Hex): Observable<any> => {
     return this.http.post(`https://localhost:5001/api/game/SetHex?boardId=${boardId}`, hex, { headers: this.headers }).pipe(map((response: any) => {
+      return response;
+    }));
+  }
+
+  AddBuilding = (boardId: number, buildingForm: BuildingForm): Observable<any> => {
+    return this.http.post(`https://localhost:5001/api/game/AddBuilding?boardId=${boardId}`, buildingForm, { headers: this.headers }).pipe(map((response: any) => {
       return response;
     }));
   }

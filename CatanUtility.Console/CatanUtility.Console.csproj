@@ -1,27 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Game\" />
-    <Folder Include="wwwroot\images\" />
-    <Folder Include="Services\" />
-    <Folder Include="Models\Forms\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CatanUtility.Classes\CatanUtility.Classes.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-    <Content Remove="Views\Game\NewGame.cshtml" />
-    <Content Remove="wwwroot\css\site.scss" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
+    <Folder Include="Data\Constants\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
@@ -31,5 +16,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CatanUtility.Classes\CatanUtility.Classes.csproj" />
   </ItemGroup>
 </Project>

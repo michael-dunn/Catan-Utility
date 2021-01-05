@@ -1,1 +1,15 @@
-<app-board *ngIf="game.hexes" [hexes]="game.hexes"></app-board>
+<div>
+    <app-board *ngIf="game && game.hexes" [hexes]="game.hexes"></app-board>
+</div>
+<div>
+    <form (ngSubmit)="onSubmit()">
+        <label>Hex Number:</label><input [(ngModel)]="buildingForm.hex" type="text" id="hex" name="hex"/>
+        <label>Position Number:</label><input [(ngModel)]="buildingForm.position" type="text" id="position" name="position"/>
+        <label>Type:</label><select [(ngModel)]="buildingForm.buildingType" type="text" id="buildingType" name="buildingType">
+            <option value="City">City</option>
+            <option value="Settlement">Settlement</option>
+            <option value="Road">Road</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</div>

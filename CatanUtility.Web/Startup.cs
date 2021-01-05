@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using CatanUtility.Web.Models;
 
 namespace CatanUtility.Web
 {
@@ -34,6 +35,10 @@ namespace CatanUtility.Web
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
+            });
+            services.AddDbContext<GameContext>(options =>
+            {
+                options.UseSqlite("Data Source = Catan.db");
             });
             services.AddControllersWithViews();
         }
