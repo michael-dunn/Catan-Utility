@@ -2,12 +2,12 @@
 
 namespace CatanUtility.Web.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Board",
+                name: "Boards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -15,33 +15,11 @@ namespace CatanUtility.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Board", x => x.Id);
+                    table.PrimaryKey("PK_Boards", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BoardHex",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Resource = table.Column<int>(type: "INTEGER", nullable: false),
-                    Number = table.Column<int>(type: "INTEGER", nullable: false),
-                    Robber = table.Column<bool>(type: "INTEGER", nullable: false),
-                    BoardId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BoardHex", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BoardHex_Board_BoardId",
-                        column: x => x.BoardId,
-                        principalTable: "Board",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Edge",
+                name: "Edges",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -53,11 +31,11 @@ namespace CatanUtility.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Edge", x => x.Id);
+                    table.PrimaryKey("PK_Edges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Edge_Board_BoardId",
+                        name: "FK_Edges_Boards_BoardId",
                         column: x => x.BoardId,
-                        principalTable: "Board",
+                        principalTable: "Boards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -74,15 +52,37 @@ namespace CatanUtility.Web.Migrations
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Games_Board_BoardId",
+                        name: "FK_Games_Boards_BoardId",
                         column: x => x.BoardId,
-                        principalTable: "Board",
+                        principalTable: "Boards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vertex",
+                name: "Hexes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Resource = table.Column<int>(type: "INTEGER", nullable: false),
+                    Number = table.Column<int>(type: "INTEGER", nullable: false),
+                    Robber = table.Column<bool>(type: "INTEGER", nullable: false),
+                    BoardId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hexes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hexes_Boards_BoardId",
+                        column: x => x.BoardId,
+                        principalTable: "Boards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vertices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -95,17 +95,44 @@ namespace CatanUtility.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vertex", x => x.Id);
+                    table.PrimaryKey("PK_Vertices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vertex_Board_BoardId",
+                        name: "FK_Vertices_Boards_BoardId",
                         column: x => x.BoardId,
-                        principalTable: "Board",
+                        principalTable: "Boards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Player",
+                name: "Harbors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PositionId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    BoardId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Harbors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Harbors_Boards_BoardId",
+                        column: x => x.BoardId,
+                        principalTable: "Boards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Harbors_Edges_PositionId",
+                        column: x => x.PositionId,
+                        principalTable: "Edges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Players",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -117,9 +144,9 @@ namespace CatanUtility.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Player", x => x.Id);
+                    table.PrimaryKey("PK_Players", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Player_Games_GameId",
+                        name: "FK_Players_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
                         principalColumn: "Id",
@@ -127,7 +154,7 @@ namespace CatanUtility.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Card",
+                name: "Cards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -137,28 +164,23 @@ namespace CatanUtility.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Card", x => x.Id);
+                    table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Card_Player_PlayerId",
+                        name: "FK_Cards_Players_PlayerId",
                         column: x => x.PlayerId,
-                        principalTable: "Player",
+                        principalTable: "Players",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BoardHex_BoardId",
-                table: "BoardHex",
-                column: "BoardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Card_PlayerId",
-                table: "Card",
+                name: "IX_Cards_PlayerId",
+                table: "Cards",
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Edge_BoardId",
-                table: "Edge",
+                name: "IX_Edges_BoardId",
+                table: "Edges",
                 column: "BoardId");
 
             migrationBuilder.CreateIndex(
@@ -167,38 +189,56 @@ namespace CatanUtility.Web.Migrations
                 column: "BoardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Player_GameId",
-                table: "Player",
+                name: "IX_Harbors_BoardId",
+                table: "Harbors",
+                column: "BoardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Harbors_PositionId",
+                table: "Harbors",
+                column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hexes_BoardId",
+                table: "Hexes",
+                column: "BoardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Players_GameId",
+                table: "Players",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vertex_BoardId",
-                table: "Vertex",
+                name: "IX_Vertices_BoardId",
+                table: "Vertices",
                 column: "BoardId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BoardHex");
+                name: "Cards");
 
             migrationBuilder.DropTable(
-                name: "Card");
+                name: "Harbors");
 
             migrationBuilder.DropTable(
-                name: "Edge");
+                name: "Hexes");
 
             migrationBuilder.DropTable(
-                name: "Vertex");
+                name: "Vertices");
 
             migrationBuilder.DropTable(
-                name: "Player");
+                name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "Edges");
 
             migrationBuilder.DropTable(
                 name: "Games");
 
             migrationBuilder.DropTable(
-                name: "Board");
+                name: "Boards");
         }
     }
 }

@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CatanUtility.Classes;
 using System.Linq;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace CatanUtilityTests
         [SetUp]
         public void Setup()
         {
-            game = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
+            game = FileUtility.OpenSaveGame("../../../../CatanUtility.Console/Data/TestGame.data");
         }
 
         [Test]
@@ -25,8 +25,8 @@ namespace CatanUtilityTests
         [Test]
         public void BoardIsCorrect()
         {
-            Assert.AreEqual(CatanResourceType.Wood, game.Board.Hexes.First().Resource);
-            Assert.AreEqual(3, game.Board.Hexes.First().Number);
+            Assert.AreEqual(CatanResourceType.Sheep, game.Board.Hexes.First().Resource);
+            Assert.AreEqual(6, game.Board.Hexes.First().Number);
         }
 
         [Test]

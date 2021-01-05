@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CatanUtility\CatanUtility.csproj" />
+    <ProjectReference Include="..\CatanUtility.Web\CatanUtility.Web.csproj" />
+    <ProjectReference Include="..\CatanUtility.Classes\CatanUtility.Classes.csproj" />
   </ItemGroup>
 </Project>

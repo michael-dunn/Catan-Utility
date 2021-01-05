@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatanUtility.Web.Migrations
 {
     [DbContext(typeof(GameContext))]
-    [Migration("20201126180523_initial")]
-    partial class initial
+    [Migration("20210105022751_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("CatanUtility.Classes.Board", b =>
                 {
@@ -26,7 +26,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Board");
+                    b.ToTable("Boards");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.BoardHex", b =>
@@ -51,7 +51,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("BoardHex");
+                    b.ToTable("Hexes");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.Card", b =>
@@ -70,7 +70,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("Card");
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.Edge", b =>
@@ -95,7 +95,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("Edge");
+                    b.ToTable("Edges");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.Game", b =>
@@ -112,6 +112,30 @@ namespace CatanUtility.Web.Migrations
                     b.HasIndex("BoardId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("CatanUtility.Classes.Harbor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BoardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PositionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardId");
+
+                    b.HasIndex("PositionId");
+
+                    b.ToTable("Harbors");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.Player", b =>
@@ -136,7 +160,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("Player");
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.Vertex", b =>
@@ -164,7 +188,7 @@ namespace CatanUtility.Web.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("Vertex");
+                    b.ToTable("Vertices");
                 });
 
             modelBuilder.Entity("CatanUtility.Classes.BoardHex", b =>
@@ -197,6 +221,19 @@ namespace CatanUtility.Web.Migrations
                     b.Navigation("Board");
                 });
 
+            modelBuilder.Entity("CatanUtility.Classes.Harbor", b =>
+                {
+                    b.HasOne("CatanUtility.Classes.Board", null)
+                        .WithMany("Harbors")
+                        .HasForeignKey("BoardId");
+
+                    b.HasOne("CatanUtility.Classes.Edge", "Position")
+                        .WithMany()
+                        .HasForeignKey("PositionId");
+
+                    b.Navigation("Position");
+                });
+
             modelBuilder.Entity("CatanUtility.Classes.Player", b =>
                 {
                     b.HasOne("CatanUtility.Classes.Game", null)
@@ -214,6 +251,8 @@ namespace CatanUtility.Web.Migrations
             modelBuilder.Entity("CatanUtility.Classes.Board", b =>
                 {
                     b.Navigation("Edges");
+
+                    b.Navigation("Harbors");
 
                     b.Navigation("Hexes");
 

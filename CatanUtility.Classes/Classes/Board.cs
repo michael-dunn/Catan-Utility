@@ -19,17 +19,11 @@ namespace CatanUtility.Classes
             Vertices = new List<Vertex>();
             Edges = new List<Edge>();
             Harbors = new List<Harbor>();
-            for (int i = 0; i < 72; i++)
-            {
-                if (i < 54) { Vertices.Add(new Vertex(i)); }
-                if (i < 19) { Hexes.Add(new BoardHex()); }
-                Edges.Add(new Edge(i));
-            }
         }
 
-        public Board(string file) : this()
+        public Board(string boardHexesFile)
         {
-            Hexes = FileUtility.OpenBoardFile(file);
+            Hexes = FileUtility.OpenBoardFile(boardHexesFile);
             Vertices = new List<Vertex>();
             Edges = new List<Edge>();
             Harbors = new List<Harbor>();

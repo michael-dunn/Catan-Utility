@@ -16,10 +16,16 @@ namespace CatanUtility.Web.Models
         }
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<Board> Boards { get; set; }
+        public DbSet<BoardHex> Hexes { get; set; }
+        public DbSet<Edge> Edges { get; set; }
+        public DbSet<Vertex> Vertices { get; set; }
+        public DbSet<Harbor> Harbors { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = Catan.db");
         }
     }
 }

@@ -6,19 +6,19 @@ namespace CatanUtilityTests
 {
     public class FileTests
     {
-        Game game, unmodifiedGame;
+        Game game;
 
         [SetUp]
         public void Setup()
         {
-            game = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
-            unmodifiedGame = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
+            game = FileUtility.OpenSaveGame("../../../../CatanUtility.Console/Data/TestGame.data");
         }
 
         [TearDown]
         public void TearDown()
         {
-            FileUtility.SaveGame(unmodifiedGame, "../../../../CatanUtility/Data/TestGame.data");
+            var staticGame = FileUtility.OpenSaveGame("../../../../CatanUtility.Console/Data/TestGameStatic.data");
+            FileUtility.SaveGame(staticGame, "../../../../CatanUtility.Console/Data/TestGame.data");
         }
 
         [Test]
@@ -33,8 +33,8 @@ namespace CatanUtilityTests
             var edge = game.Board.Edges.First();
             edge.Color = "Red";
             edge.Occupied = true;
-            FileUtility.SaveGame(game, "../../../../CatanUtility/Data/TestGame.data");
-            var changedGame = FileUtility.OpenSaveGame("../../../../CatanUtility/Data/TestGame.data");
+            FileUtility.SaveGame(game, "../../../../CatanUtility.Console/Data/TestGame.data");
+            var changedGame = FileUtility.OpenSaveGame("../../../../CatanUtility.Console/Data/TestGame.data");
             Assert.AreEqual(changedGame.Board.Edges.First().ToString(), edge.ToString());
         }
     }

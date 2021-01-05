@@ -1,19 +1,18 @@
 ﻿using CatanUtility.Classes;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CatanUtility.Web.Models.ViewModels
 {
     public class GameViewModel
     {
+        public int Id { get; set; }
         public List<HexViewModel> Hexes { get; set; }
 
         public GameViewModel() { }
         public GameViewModel(Game game)
         {
+            Id = game.Id;
             Hexes = new List<HexViewModel>() { };
             var spacerHex = new HexViewModel() { ResourceType = "spacer" };
             var waterHex = new HexViewModel() { ResourceType = "water" };
