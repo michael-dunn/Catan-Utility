@@ -24,6 +24,7 @@ namespace CatanUtility.Web.Controllers
         public IActionResult GetTestGame()
         {
             var game = _context.Add(new Game()).Entity;
+            game.Board.SetupLists();
             game.Board.BuildRandomBoard();
             game.Players.Add(new Player() { Color = "Orange", Name = "Michael" });
             game.Players.Add(new Player() { Color = "White", Name = "Emma" });
