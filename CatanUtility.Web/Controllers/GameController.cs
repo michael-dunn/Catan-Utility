@@ -86,10 +86,13 @@ namespace CatanUtility.Web.Controllers
                     .ThenInclude(b => b.Hexes)
                 .FirstOrDefault(g => g.Id == boardId);
             var entityBoard = _context.Boards
-                .Include("Hexes")
-                .Include("Edges")
-                .Include("Vertices")
+                .Include(b => b.Hexes.OrderBy(h=>h.Index))
+                .Include(b => b.Edges.OrderBy(e=>e.Index))
+                .Include(b=> b.Vertices.OrderBy(v=>v.Index))
                 .FirstOrDefault(b => b.Id == boardId);
+            entityBoard.Hexes = entityBoard.Hexes.OrderBy(h => h.Index).ToList();
+            GameUtility.SetupGraph(entityBoard);
+            entityGame.Board = entityBoard;
             if (buildingForm.BuildingType == BuildType.Road.ToString())
             {
                 var position = GameUtility.HexEdges[int.Parse(buildingForm.Hex)][int.Parse(buildingForm.Position)];

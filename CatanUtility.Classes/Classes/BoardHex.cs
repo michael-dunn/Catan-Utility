@@ -10,13 +10,17 @@ namespace CatanUtility.Classes
         public CatanResourceType Resource { get; set; }
         public int Number { get; set; }
         public bool Robber { get; set; }
+        public int Index { get; set; }
         [NotMapped]
         public List<int> EdgeIndices {get;set;}
         [NotMapped]
         public List<int> VertexIndices { get; set; }
 
-        public BoardHex()
+        public BoardHex() { }
+
+        public BoardHex(int i)
         {
+            Index = i;
         }
         public BoardHex(CatanResourceType _resource, int _number, bool _robber)
         {

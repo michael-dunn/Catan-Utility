@@ -35,7 +35,7 @@ namespace CatanUtility.Classes
             for (int i = 0; i < 72; i++)
             {
                 if (i < 54) { Vertices.Add(new Vertex(i)); }
-                if (i < 19) { Hexes.Add(new BoardHex()); }
+                if (i < 19) { Hexes.Add(new BoardHex(i)); }
                 Edges.Add(new Edge(i));
             }
         }
@@ -59,6 +59,10 @@ namespace CatanUtility.Classes
                 Hexes.Add(new BoardHex(resources[i], values[i], false));
             }
             Hexes.Insert(new Random().Next(0, 19), new BoardHex(CatanResourceType.Desert, 0, true));
+            for (int i = 0; i< 19; i++)
+            {
+                Hexes[i].Index = i;
+            }
         }
 
         public void AddHarbor(int hexNumber, int edgeIndex, HarborType harborType)
