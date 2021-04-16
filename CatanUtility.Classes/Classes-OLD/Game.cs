@@ -1,17 +1,15 @@
-﻿using System;
+﻿using CatanUtility.Models.Enums;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using CatanUtility.Classes.Enums;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Game
     {
         public int Id { get; set; }
         public Board Board { get; set; }
         public List<Player> Players { get; set; }
-        [NotMapped]
         public bool CloseGame { get; set; }
         public Game()
         {

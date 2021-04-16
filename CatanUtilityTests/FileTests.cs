@@ -1,5 +1,6 @@
-using NUnit.Framework;
 using CatanUtility.Classes;
+using CatanUtility.Classes.OLD;
+using NUnit.Framework;
 using System.Linq;
 
 namespace CatanUtilityTests

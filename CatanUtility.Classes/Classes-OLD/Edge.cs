@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Edge
     {
         public int Id { get; set; }
         public bool Occupied { get; set; }
         public string Color { get; set; }
-        [NotMapped]
         public List<int> LinkedEdges { get; set; }
         public int Index { get; set; }
         public Edge() { }
@@ -28,7 +24,7 @@ namespace CatanUtility.Classes
 
     public class ListEdgeComparer : IEqualityComparer<List<Edge>>
     {
-        public bool Equals([AllowNull] List<Edge> x, [AllowNull] List<Edge> y)
+        public bool Equals(List<Edge> x, List<Edge> y)
         {
             if (ReferenceEquals(x, null) && ReferenceEquals(y, null))
             {
@@ -42,7 +38,7 @@ namespace CatanUtility.Classes
             return GetHashCode(x) == GetHashCode(y);
         }
 
-        public int GetHashCode([DisallowNull] List<Edge> edges)
+        public int GetHashCode(List<Edge> edges)
         {
             int num = 0;
             var orderedEdges = edges.OrderBy(e => e.Index).Select(e=>e.Index).ToList();

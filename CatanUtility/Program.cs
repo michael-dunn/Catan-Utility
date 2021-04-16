@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.AccessControl;
-using CatanUtility.Classes;
+﻿using CatanUtility.ConsoleServices;
+using CatanUtility.Models;
 
-namespace CatanUtility
+namespace CatanUtility.ConsoleConsole
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            Game game = ConsoleUtility.OpenSavedGame();
-            while (!game.CloseGame)
+            Game game = new Game();
+            ConsoleService consoleService = new ConsoleService(new GameService(), new SaveLoadService());
+            while (!consoleService.stopGame)
             {
-                ConsoleUtility.GameInput(game);
+                consoleService.GameInput(game);
             }
-            Console.WriteLine("Game Closing . . .");
         }
     }
 }

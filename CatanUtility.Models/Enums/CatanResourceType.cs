@@ -1,4 +1,4 @@
-﻿namespace CatanUtility.Classes.Enums
+﻿namespace CatanUtility.Models.Enums
 {
     public enum CatanResourceType
     {

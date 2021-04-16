@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CatanUtility.Classes.OLD;
+using CatanUtility.Models.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CatanUtility.Classes.Enums;
 
 namespace CatanUtility.Classes
 {

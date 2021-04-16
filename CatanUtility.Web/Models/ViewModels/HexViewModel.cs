@@ -1,8 +1,5 @@
-﻿using CatanUtility.Classes;
-using System;
+﻿using CatanUtility.Classes.OLD;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CatanUtility.Web.Models.ViewModels
 {

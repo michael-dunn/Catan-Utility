@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using CatanUtility.Classes.Enums;
+﻿using CatanUtility.Models.Enums;
+using System.Collections.Generic;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class BoardHex
     {
@@ -10,9 +9,7 @@ namespace CatanUtility.Classes
         public CatanResourceType Resource { get; set; }
         public int Number { get; set; }
         public bool Robber { get; set; }
-        [NotMapped]
         public List<int> EdgeIndices {get;set;}
-        [NotMapped]
         public List<int> VertexIndices { get; set; }
 
         public BoardHex()

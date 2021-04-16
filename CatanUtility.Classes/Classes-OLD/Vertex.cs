@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CatanUtility.Models.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using CatanUtility.Classes.Enums;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Vertex
     {

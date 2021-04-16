@@ -1,17 +1,26 @@
-﻿using System;
+﻿using CatanUtility.Interfaces;
+using CatanUtility.Models;
+using CatanUtility.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CatanUtility.Classes.Enums;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.ConsoleServices
 {
-    public static class ConsoleUtility
+    public class ConsoleService
     {
-        public static bool GameInput(Game game)
+        private IGameService _gameService { get; set; }
+        private ISaveLoad _saveLoadService { get; set; }
+        public bool stopGame { get; private set; }
+        public ConsoleService(IGameService gameService, ISaveLoad saveLoadService)
         {
-            FileUtility.SaveGame(game);
-
-            //_ = Console.ReadLine();//throwaway any additional inputs
+            stopGame = false;
+            _gameService = gameService;
+            _saveLoadService = saveLoadService;
+        }
+        public bool GameInput(Game game)
+        {
+            _saveLoadService.SaveGame(game);
 
             Console.Write("Enter Input Here: (press h for help)");
             var input = Console.ReadLine().Split(' ');
@@ -29,31 +38,31 @@ namespace CatanUtility.Classes
                             case "s"://settlement
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.GetBoardIndex(hex, position);
+                                buildIndex = _gameService.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
 
-                                game.Build(BuildType.Settlement, buildIndex, color, initialBuild);
+                                _gameService.Build(BuildType.Settlement, buildIndex, color, initialBuild);
                                 return true;
                             case "r"://road
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.GetBoardIndex(hex, position);
+                                buildIndex = _gameService.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
 
-                                game.Build(BuildType.Road, buildIndex, color, initialBuild);
+                                _gameService.Build(BuildType.Road, buildIndex, color, initialBuild);
                                 return true;
                             case "c"://city
                                 hex = ParseIntBetweenValues(input[2], "hex", 1, 19);
                                 position = ParseIntBetweenValues(input[3], "hex position", 1, 6);
-                                buildIndex = GameUtility.GetBoardIndex(hex, position);
+                                buildIndex = _gameService.GetBoardIndex(hex, position);
                                 color = VerifyColorInGame(input[4], game.Players);
 
-                                game.Build(BuildType.City, buildIndex, color, initialBuild);
+                                _gameService.Build(BuildType.City, buildIndex, color, initialBuild);
                                 return true;
                             case "d"://development card
                                 color = VerifyColorInGame(input[2], game.Players);
 
-                                game.BuildDevelopmentCard(color, initialBuild);
+                                _gameService.BuildDevelopmentCard(color, initialBuild);
                                 return true;
                             default:
                                 Console.WriteLine("Incorrect building type (s,r,c,d)");
@@ -108,9 +117,9 @@ namespace CatanUtility.Classes
                         Console.WriteLine("A {0} was rolled.", diceValue);
                         if (diceValue != 7)
                         {
-                            game.DiceRoll(diceValue);
+                            _gameService.DiceRoll(diceValue);
                         } else {
-                            GameUtility.MoveRobber(game.Board, GetNextRobberPosition());
+                            _gameService.MoveRobber(game.Board, GetNextRobberPosition());
                         }
                         return true;
                     }
@@ -131,9 +140,6 @@ namespace CatanUtility.Classes
                                 color = VerifyColorIsAllowed(input[3]);
                                 game.Players.Add(new Player() { Name = input[2], Color = color });
                                 return true;
-                            case "pf":
-                                game.Players = FileUtility.OpenPlayersFile();
-                                return true;
                             default:
                                 Console.WriteLine("Incorrect setup input (b,p)");
                                 return false;
@@ -142,7 +148,7 @@ namespace CatanUtility.Classes
                     Console.WriteLine("Incorrect setup input (b, p)");
                     return false;
                 case "q"://quit
-                    game.CloseGame = true;
+                    stopGame = true;
                     return true;
                 case "m"://manage game
                     if (input.Length == 2)
@@ -150,7 +156,7 @@ namespace CatanUtility.Classes
                         switch (input[1])
                         {
                             case "s"://save game
-                                FileUtility.SaveGame(game);
+                                _saveLoadService.SaveGame(game);
                                 return true;
                             default:
                                 Console.WriteLine("Incorrect manage input (s)");
@@ -211,7 +217,7 @@ namespace CatanUtility.Classes
                         switch (input[1])
                         {
                             case "s"://best spots
-                                var bestVertices = game.GetBestVertices();
+                                var bestVertices = _gameService.GetBestVertices();
                                 for (int i = 0; i < bestVertices.Count() - 1; i++)
                                 {
                                     Console.Write("{0}, ", bestVertices[i]);
@@ -230,14 +236,12 @@ namespace CatanUtility.Classes
                     return false;
             }
         }
-
-        public static Game OpenSavedGame()
+        public Game OpenSavedGame()
         {
             Console.Write("Would you like to open a saved game from game.data? (Y/N): ");
-            return Console.ReadLine() == "Y" ? FileUtility.OpenSaveGame() : new Game();
+            return Console.ReadLine() == "Y" ? _saveLoadService.LoadGame() : new Game();
         }
-
-        public static int ParseInt(string num, string numFor)
+        public int ParseInt(string num, string numFor)
         {
             int returnNum = 0;
             if (int.TryParse(num, out returnNum))
@@ -246,7 +250,7 @@ namespace CatanUtility.Classes
             Console.Write("Enter a new number for {0}: ", numFor);
             return ParseInt(Console.ReadLine(), numFor);
         }
-        public static int ParseIntBetweenValues(string num, string numFor, int min, int max)
+        public int ParseIntBetweenValues(string num, string numFor, int min, int max)
         {
             int returnNum = 0;
             if (int.TryParse(num, out returnNum) && returnNum >= min && returnNum <= max)
@@ -255,7 +259,7 @@ namespace CatanUtility.Classes
             Console.Write("Enter a new number for {0}: ", numFor);
             return ParseIntBetweenValues(Console.ReadLine(), numFor, min, max);
         }
-        public static HarborType ParseHarborType(string harborType)
+        public HarborType ParseHarborType(string harborType)
         {
             if (Enum.IsDefined(typeof(HarborType), (HarborType)harborType.First()))
             {
@@ -266,7 +270,7 @@ namespace CatanUtility.Classes
             Console.Write("Enter a new char for harbor type: ");
             return ParseHarborType(Console.ReadLine());
         }
-        public static string VerifyColorInGame(string col, List<Player> players)
+        public string VerifyColorInGame(string col, List<Player> players)
         {
             if (players.Any(p => p.Color == col))
                 return col;
@@ -280,7 +284,7 @@ namespace CatanUtility.Classes
             Console.Write("Enter correct color: ");
             return VerifyColorInGame(Console.ReadLine(), players);
         }
-        public static string VerifyColorIsAllowed(string col)
+        public string VerifyColorIsAllowed(string col)
         {
             var colors = new List<string>() { "Red", "Blue", "White", "Orange" };
             if (colors.Any(p => p.Trim().ToLower() == col.Trim().ToLower()))
@@ -295,8 +299,7 @@ namespace CatanUtility.Classes
             Console.Write("Enter correct color: ");
             return VerifyColorIsAllowed(Console.ReadLine());
         }
-
-        public static void PrintHand(Player player)
+        public void PrintHand(Player player)
         {
             var orderedHand = player.Hand.OrderBy(h => h).ToList();
             Console.Write("{0}", orderedHand.FirstOrDefault().ToString() ?? "No cards");
@@ -304,19 +307,17 @@ namespace CatanUtility.Classes
                 Console.Write(", {0}", orderedHand[i]);
             Console.WriteLine();
         }
-
-        public static void PrintHex(Board board, int hexNumber)
+        public void PrintHex(Board board, int hexNumber)
         {
-            Console.WriteLine("{0,25}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,15}{1,17}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 6)], board.Edges[GameUtility.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,0}{1,30}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 6)], board.Vertices[GameUtility.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,15}{2,15}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 5)], board.Hexes[hexNumber - 1], board.Edges[GameUtility.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,30}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 5)], board.Vertices[GameUtility.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,15}{1,17}", board.Edges[GameUtility.GetBoardIndex(hexNumber, 4)], board.Edges[GameUtility.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,25}", board.Vertices[GameUtility.GetBoardIndex(hexNumber, 4)]);
+            Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 1)]);
+            Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 6)], board.Edges[_gameService.GetBoardIndex(hexNumber, 1)]);
+            Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 6)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 2)]);
+            Console.WriteLine("{0,0}{1,15}{2,15}", board.Edges[_gameService.GetBoardIndex(hexNumber, 5)], board.Hexes[hexNumber - 1], board.Edges[_gameService.GetBoardIndex(hexNumber, 2)]);
+            Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 5)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 3)]);
+            Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 4)], board.Edges[_gameService.GetBoardIndex(hexNumber, 3)]);
+            Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 4)]);
         }
-
-        public static void PrintBoard(Board board)
+        public void PrintBoard(Board board)
         {
             if (board.Hexes.Count > 0)
             {
@@ -332,7 +333,6 @@ namespace CatanUtility.Classes
                 Console.WriteLine();
             }
         }
-
         private static void PrintRow(IEnumerable<BoardHex> hexLine, int startSpaces)
         {
             Console.Write(new string(' ', startSpaces));
@@ -340,29 +340,26 @@ namespace CatanUtility.Classes
                 Console.Write(hex + " ");
             Console.WriteLine('\n');
         }
-
-        public static int GetNextRobberPosition()
+        public int GetNextRobberPosition()
         {
             Console.Write("Move robber to hex position(1-19): ");
             return ParseIntBetweenValues(Console.ReadLine(), "Robber position", 1, 19);
         }
-
-        public static void PromptToBuildBoard(Board board)
+        public void PromptToBuildBoard(Board board)
         {
             Console.Write("Open saved board, if not random board will be built? (Y/N) ");
             var response = Console.Read();
             Console.WriteLine();
             if (response == 'Y')
             {
-                board.Hexes = FileUtility.OpenBoardFile();
+                board.Hexes = new List<BoardHex>(); //TODO add board file open thing
             }
             else
             {
-                board.BuildRandomBoard();
+                board = _gameService.BuildRandomBoard();
             }
         }
-
-        public static void PromptToAddHarbor(Board board)
+        public void PromptToAddHarbor(Board board)
         {
             Console.WriteLine("Harbor Types: Sheep = 'S', Wheat = 'H', Ore = 'O', Brick = 'B', Wood = 'W', Any = 'A'");
             Console.Write("To add a harbor, provide hex number, edge index, and type like 'h,e,t'");
@@ -381,8 +378,8 @@ namespace CatanUtility.Classes
             Console.WriteLine("Adding harbor {0} {1} to hex {2}, edge {3}",
                 harborType.ToString(), harborType == HarborType.Any ? "3:1" : "2:1", hexNumber, edgeIndex);
 
-
-            board.AddHarbor(hexNumber, edgeIndex, harborType);
+            throw new NotImplementedException();
+            //_gameService.AddHarbor(game, hexNumber, edgeIndex, harborType);
         }
 
     }

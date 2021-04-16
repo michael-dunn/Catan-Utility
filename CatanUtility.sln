@@ -1,11 +1,16 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtility", "CatanUtility\CatanUtility.csproj", "{19988785-ECD6-4821-B5FF-1F7B2DE32701}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Console", "CatanUtility\CatanUtility.Console.csproj", "{19988785-ECD6-4821-B5FF-1F7B2DE32701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtilityTests", "CatanUtilityTests\CatanUtilityTests.csproj", "{55B5BA4C-815D-4DEA-8F96-CC108037E973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtilityTests", "CatanUtilityTests\CatanUtilityTests.csproj", "{55B5BA4C-815D-4DEA-8F96-CC108037E973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtility.Web", "CatanUtility.Web\CatanUtility.Web.csproj", "{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Web", "CatanUtility.Web\CatanUtility.Web.csproj", "{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Interfaces", "CatanUtility.Classes\CatanUtility.Interfaces.csproj", "{A480283C-4EBF-42A8-841A-747621F0B5B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtility.Models", "CatanUtility.Models\CatanUtility.Models.csproj", "{0086A83C-5226-4209-9C16-63FDEF7D5794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +30,19 @@ Global
 		{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A480283C-4EBF-42A8-841A-747621F0B5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A480283C-4EBF-42A8-841A-747621F0B5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A480283C-4EBF-42A8-841A-747621F0B5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A480283C-4EBF-42A8-841A-747621F0B5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB9B8406-6DE1-49B0-95CB-30DBBED45C38}
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CatanUtility.Classes.Enums;
+﻿using System.Collections.Generic;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Player
     {

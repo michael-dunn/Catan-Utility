@@ -1,8 +1,7 @@
-using NUnit.Framework;
 using CatanUtility.Classes;
-using System.Linq;
-using System.Collections.Generic;
-using CatanUtility.Classes.Enums;
+using CatanUtility.Classes.OLD;
+using CatanUtility.Models.Enums;
+using NUnit.Framework;
 
 namespace CatanUtilityTests
 {

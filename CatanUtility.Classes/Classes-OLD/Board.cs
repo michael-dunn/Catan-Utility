@@ -1,9 +1,9 @@
-﻿using System;
+﻿using CatanUtility.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CatanUtility.Classes.Enums;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Board
     {

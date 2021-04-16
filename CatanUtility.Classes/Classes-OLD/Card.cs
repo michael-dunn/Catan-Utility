@@ -1,7 +1,6 @@
-﻿using System;
-using CatanUtility.Classes.Enums;
+﻿using CatanUtility.Models.Enums;
 
-namespace CatanUtility.Classes
+namespace CatanUtility.Classes.OLD
 {
     public class Card
     {
