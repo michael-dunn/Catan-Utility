@@ -3,7 +3,7 @@ using CatanUtility.Classes.OLD;
 using NUnit.Framework;
 using System.Linq;
 
-namespace CatanUtilityTests
+namespace CatanUtility.TestsOld
 {
     public class FileTests
     {

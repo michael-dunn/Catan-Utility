@@ -3,7 +3,7 @@ using CatanUtility.Classes.OLD;
 using CatanUtility.Models.Enums;
 using NUnit.Framework;
 
-namespace CatanUtilityTests
+namespace CatanUtility.TestsOld
 {
     public class NetworkTests
     {

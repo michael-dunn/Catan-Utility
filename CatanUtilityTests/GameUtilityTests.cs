@@ -2,7 +2,7 @@ using NUnit.Framework;
 using CatanUtility.Classes;
 using System.Linq;
 
-namespace CatanUtilityTests
+namespace CatanUtility.TestsOld
 {
     public class GameUtilityTests
     {

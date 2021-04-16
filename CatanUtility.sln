@@ -4,13 +4,15 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Console", "CatanUtility\CatanUtility.Console.csproj", "{19988785-ECD6-4821-B5FF-1F7B2DE32701}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtilityTests", "CatanUtilityTests\CatanUtilityTests.csproj", "{55B5BA4C-815D-4DEA-8F96-CC108037E973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtilityTestsOld", "CatanUtilityTests\CatanUtilityTestsOld.csproj", "{55B5BA4C-815D-4DEA-8F96-CC108037E973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Web", "CatanUtility.Web\CatanUtility.Web.csproj", "{BF538DBE-DA47-4649-BD4F-2CD3A2BA9A01}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatanUtility.Interfaces", "CatanUtility.Classes\CatanUtility.Interfaces.csproj", "{A480283C-4EBF-42A8-841A-747621F0B5B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtility.Models", "CatanUtility.Models\CatanUtility.Models.csproj", "{0086A83C-5226-4209-9C16-63FDEF7D5794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatanUtility.Console.Tests", "CatanUtility.Console.Tests\CatanUtility.Console.Tests.csproj", "{D031B041-B156-46FF-BB8A-95A79D6D722B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0086A83C-5226-4209-9C16-63FDEF7D5794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D031B041-B156-46FF-BB8A-95A79D6D722B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D031B041-B156-46FF-BB8A-95A79D6D722B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D031B041-B156-46FF-BB8A-95A79D6D722B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D031B041-B156-46FF-BB8A-95A79D6D722B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
