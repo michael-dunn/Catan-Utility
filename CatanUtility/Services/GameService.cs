@@ -75,7 +75,35 @@ namespace CatanUtility.ConsoleServices
 
         public Board BuildRandomBoard()
         {
-            throw new System.NotImplementedException();
+            var board = new Board();
+            //TODO: implement rules like 8 and 6 cannot be touching
+            var resources = new List<CatanResourceType>() { CatanResourceType.Brick, CatanResourceType.Brick, CatanResourceType.Brick,
+                                                            CatanResourceType.Ore, CatanResourceType.Ore, CatanResourceType.Ore,
+                                                            CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat, CatanResourceType.Wheat,
+                                                            CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood, CatanResourceType.Wood,
+                                                            CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep, CatanResourceType.Sheep };
+            var values = new List<int>() { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
+            //randomize lists
+            resources = resources.OrderBy(a => Guid.NewGuid()).ToList();
+            values = values.OrderBy(a => Guid.NewGuid()).ToList();
+            //create board
+            for (int i = 0; i < 18; i++)
+            {
+                board.Hexes[i] = new BoardHex()
+                {
+                    Resource = resources[i],
+                    Number = values[i],
+                    Robber = false
+                };
+            }
+            board.Hexes.Insert(new Random().Next(1, 19), new BoardHex()
+            {
+                Resource = CatanResourceType.Desert,
+                Number = 0,
+                Robber = true
+            });
+            board.Hexes.RemoveAt(19);
+            return board;
         }
 
         public bool CanPlaceOnVertex(Game game, int vertexIndex, string playerColor)

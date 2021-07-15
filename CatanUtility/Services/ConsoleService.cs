@@ -23,7 +23,7 @@ namespace CatanUtility.ConsoleServices
         {
             if (_game is null)
             {
-                _game = OpenSavedGame();
+                SelectGame();
             }
             _saveLoadService.SaveGame(_game);
 
@@ -148,10 +148,10 @@ namespace CatanUtility.ConsoleServices
                         switch (input[1])
                         {
                             case "b": //board
-                                PromptToBuildBoard(_game.Board);
+                                PromptToBuildBoard();
                                 return true;
                             case "h": //harbor
-                                PromptToAddHarbor(_game.Board);
+                                PromptToAddHarbor();
                                 return true;
                             case "p": //player
                                 color = VerifyColorIsAllowed(input[3]);
@@ -233,7 +233,7 @@ namespace CatanUtility.ConsoleServices
         {
             Console.WriteLine("Help Section");
 
-            if (_game.Players.Count > 2)
+            if (_game.Players != null &&_game.Players.Count > 2)
             {
                 Console.WriteLine("b - Build");
                 Console.WriteLine("\ts - settlement (b s hex pos col)");
@@ -241,12 +241,12 @@ namespace CatanUtility.ConsoleServices
                 Console.WriteLine("\tc - city  (b s hex pos col)");
                 Console.WriteLine("\td - development card (b d col)");
             }
-            if (_game.Board.Hexes.Count > 0)
+            if (_game.Board != null && _game.Board.Hexes.Count > 0)
             {
                 Console.WriteLine("p - Print");
                 Console.WriteLine("\th - hex (p h hex)");
                 Console.WriteLine("\tb - board  (p b)");
-                if (_game.Players.Count > 2)
+                if (_game.Players != null && _game.Players.Count > 2)
                 {
                     Console.WriteLine("\tp - player");
                     Console.WriteLine("\t\th - player hand (p p h col)");
@@ -268,7 +268,7 @@ namespace CatanUtility.ConsoleServices
             Console.WriteLine("\ts- Save game (m s)");
         }
 
-        private Game OpenSavedGame()
+        private void SelectGame()
         {
             Console.Write("Would you like to open a saved game from game.data? (Y/N): ");
             string userInput = Console.ReadLine().ToUpper().Trim();
@@ -276,7 +276,11 @@ namespace CatanUtility.ConsoleServices
                 Console.WriteLine("Must be either 'Y' or 'N'");
                 userInput = Console.ReadLine().ToUpper().Trim();
             }
-            return userInput == "Y" ? _saveLoadService.LoadGame() : new Game();
+            _game = userInput == "Y" ? _saveLoadService.LoadGame() : new Game();
+        }
+        public void SetGame(Game game)
+        {
+            _game = game;
         }
         private int ParseInt(string num, string numFor)
         {
@@ -346,13 +350,18 @@ namespace CatanUtility.ConsoleServices
         }
         private void PrintHex(Board board, int hexNumber)
         {
-            Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 6)], board.Edges[_gameService.GetBoardIndex(hexNumber, 1)]);
-            Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 6)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,15}{2,15}", board.Edges[_gameService.GetBoardIndex(hexNumber, 5)], board.Hexes[hexNumber - 1], board.Edges[_gameService.GetBoardIndex(hexNumber, 2)]);
-            Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 5)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 4)], board.Edges[_gameService.GetBoardIndex(hexNumber, 3)]);
-            Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 4)]);
+            if (board.Hexes.Count == 19 && board.Vertices.Count == 54 && board.Edges.Count == 72)
+            {
+                Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 1)]);
+                Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 6)], board.Edges[_gameService.GetBoardIndex(hexNumber, 1)]);
+                Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 6)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 2)]);
+                Console.WriteLine("{0,0}{1,15}{2,15}", board.Edges[_gameService.GetBoardIndex(hexNumber, 5)], board.Hexes[hexNumber - 1], board.Edges[_gameService.GetBoardIndex(hexNumber, 2)]);
+                Console.WriteLine("{0,0}{1,30}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 5)], board.Vertices[_gameService.GetBoardIndex(hexNumber, 3)]);
+                Console.WriteLine("{0,15}{1,17}", board.Edges[_gameService.GetBoardIndex(hexNumber, 4)], board.Edges[_gameService.GetBoardIndex(hexNumber, 3)]);
+                Console.WriteLine("{0,25}", board.Vertices[_gameService.GetBoardIndex(hexNumber, 4)]);
+            }
+            else
+                Console.WriteLine("Board not fully setup");
         }
         private void PrintBoard(Board board)
         {
@@ -382,21 +391,21 @@ namespace CatanUtility.ConsoleServices
             Console.Write("Move robber to hex position(1-19): ");
             return ParseIntBetweenValues(Console.ReadLine(), "Robber position", 1, 19);
         }
-        private void PromptToBuildBoard(Board board)
+        private void PromptToBuildBoard()
         {
             Console.Write("Open saved board, if not random board will be built? (Y/N) ");
-            var response = Console.Read();
+            var response = Console.ReadLine();
             Console.WriteLine();
-            if (response == 'Y')
+            if (response == "Y")
             {
-                board.Hexes = new List<BoardHex>(); //TODO add board file open thing
+                _game.Board.Hexes = new List<BoardHex>(); //TODO add board file open thing
             }
             else
             {
-                board = _gameService.BuildRandomBoard();
+                _game.Board = _gameService.BuildRandomBoard();
             }
         }
-        private void PromptToAddHarbor(Board board)
+        private void PromptToAddHarbor()
         {
             Console.WriteLine("Harbor Types: Sheep = 'S', Wheat = 'H', Ore = 'O', Brick = 'B', Wood = 'W', Any = 'A'");
             Console.Write("To add a harbor, provide hex number, edge index, and type like 'h,e,t'");

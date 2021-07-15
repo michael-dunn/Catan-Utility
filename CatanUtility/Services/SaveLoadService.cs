@@ -77,30 +77,38 @@ namespace CatanUtility.ConsoleServices
             try
             {
                 StreamWriter sw = new StreamWriter(_file);
-                sw.WriteLine("--Hexes--");
-                foreach (var hex in game.Board.Hexes)
+                if (game.Board != null && game.Board.Edges[0] != null)
                 {
-                    sw.WriteLine("{0},{1},{2}", hex.Number, (char)hex.Resource, hex.Robber);
-                }
-                sw.WriteLine("--Edges--");
-                foreach (var edge in game.Board.Edges)
-                {
-                    sw.WriteLine("{0},{1}", edge.Color, edge.Occupied);
-                }
-                sw.WriteLine("--Vertices--");
-                foreach (var vertex in game.Board.Vertices)
-                {
-                    sw.WriteLine("{0},{1},{2}", vertex.Color, (char)vertex.BuildingType, vertex.Occupied);
-                }
-                sw.WriteLine("--Players--");
-                foreach (var player in game.Players)
-                {
-                    sw.Write("{0},{1},{2}", player.Color, player.Name, player.VictoryPoints);
-                    foreach (var card in player.Hand)
+                    sw.WriteLine("--Hexes--");
+                    foreach (var hex in game.Board.Hexes)
                     {
-                        sw.Write(",{0}", (char)card.Type);
+                        sw.WriteLine("{0},{1},{2}", hex.Number, (char)hex.Resource, hex.Robber);
                     }
-                    sw.WriteLine();
+                    sw.WriteLine("--Edges--");
+                    foreach (var edge in game.Board.Edges)
+                    {
+                        sw.WriteLine("{0},{1}", edge.Color, edge.Occupied);
+                    }
+                    sw.WriteLine("--Vertices--");
+                    foreach (var vertex in game.Board.Vertices)
+                    {
+                        sw.WriteLine("{0},{1},{2}", vertex.Color, (char)vertex.BuildingType, vertex.Occupied);
+                    }
+
+                }
+                if (game.Players != null)
+                {
+                    sw.WriteLine("--Players--");
+                    foreach (var player in game.Players)
+                    {
+                        sw.Write("{0},{1},{2}", player.Color, player.Name, player.VictoryPoints);
+                        foreach (var card in player.Hand)
+                        {
+                            sw.Write(",{0}", (char)card.Type);
+                        }
+                        sw.WriteLine();
+                    }
+
                 }
                 sw.Close();
             }
