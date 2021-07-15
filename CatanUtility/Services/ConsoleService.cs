@@ -155,7 +155,7 @@ namespace CatanUtility.ConsoleServices
                                 return true;
                             case "p": //player
                                 color = VerifyColorIsAllowed(input[3]);
-                                _game.Players.Add(new Player() { Name = input[2], Color = color });
+                                _gameService.AddPlayer(_game, new Player() { Name = input[2], Color = color });
                                 return true;
                             default:
                                 Console.WriteLine("Incorrect setup input (b,p)");

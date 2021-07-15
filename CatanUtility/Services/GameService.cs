@@ -307,6 +307,15 @@ namespace CatanUtility.ConsoleServices
             throw new System.NotImplementedException();
         }
 
+        public void AddPlayer(Game game, Player player)
+        {
+            if (game.Players == null)
+            {
+                game.Players = new List<Player>();
+            }
+            game.Players.Add(player);
+        }
+
 
     }
 }

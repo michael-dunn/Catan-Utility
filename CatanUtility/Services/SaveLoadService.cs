@@ -96,7 +96,7 @@ namespace CatanUtility.ConsoleServices
                     }
 
                 }
-                if (game.Players != null)
+                if (game.Players != null && game.Players[0].Hand != null)
                 {
                     sw.WriteLine("--Players--");
                     foreach (var player in game.Players)

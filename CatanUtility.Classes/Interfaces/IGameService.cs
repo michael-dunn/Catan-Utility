@@ -21,5 +21,6 @@ namespace CatanUtility.Interfaces
         List<List<Edge>> GetLongestRoad(Game game);
         void AddHarbor(Game game, int hexNumber, int edgeIndex, HarborType harborType);
         Board BuildRandomBoard();
+        void AddPlayer(Game game, Player player);
     }
 }
