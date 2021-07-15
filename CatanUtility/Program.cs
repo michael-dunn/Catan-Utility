@@ -1,18 +1,21 @@
 ﻿using CatanUtility.ConsoleServices;
 using CatanUtility.Models;
+using System;
 
-namespace CatanUtility.ConsoleConsole
+namespace CatanUtility.Console
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            Game game = new Game();
-            ConsoleService consoleService = new ConsoleService(game, new GameService(), new SaveLoadService());
-            
+            ConsoleService consoleService = new ConsoleService(new GameService(), new SaveLoadService());
+           
             while (!consoleService.stopGame)
             {
-                consoleService.GameInput();
+                if (!consoleService.GameInput())
+                {
+                    Console.WriteLine("Unsuccessful input");
+                }
             }
         }
     }

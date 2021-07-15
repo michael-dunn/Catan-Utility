@@ -6,11 +6,11 @@ namespace CatanUtility.Interfaces
 {
     public interface IGameService
     {
-        void DiceRoll(int value);
-        void GivePlayersResources(IEnumerable<int> rolledHexIndexes);
+        void DiceRoll(Game game, int value);
+        void GivePlayersResources(Game game, IEnumerable<int> rolledHexIndexes);
         List<int> GetBestVertices();
-        void BuildDevelopmentCard(string playerColor, bool free = true);
-        bool Build(BuildType buildType, int buildPosition, string playerColor, bool free = false);
+        void BuildDevelopmentCard(Game game, string playerColor, bool free = true);
+        bool Build(Game game, BuildType buildType, int buildPosition, string playerColor, bool free = false);
         int GetBoardIndex(int hex, int position);
         int GetVertexScore(List<int> hexValues);
         List<int> GetTouchingHexIndices(int vertexIndex);
