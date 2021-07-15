@@ -4,12 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using CatanUtility.Interfaces;
 
-namespace CatanUtility.Console.Tests
+namespace CatanUtility.ConsoleInterface.Tests
 {
     [TestClass]
     public class GameServiceTests
     {
-        Game game;
         GameService sut;
 
         [TestInitialize]

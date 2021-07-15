@@ -32,7 +32,7 @@ namespace CatanUtility.ConsoleServices
 
             return ActOnInput(input);
         }
-        private bool ActOnInput(string[] input)
+        public bool ActOnInput(string[] input)
         {
             int hex, position, buildIndex, diceValue;
             string color;

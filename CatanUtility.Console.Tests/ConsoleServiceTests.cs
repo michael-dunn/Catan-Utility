@@ -4,12 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using CatanUtility.Interfaces;
 
-namespace CatanUtility.Console.Tests
+namespace CatanUtility.ConsoleInterface.Tests
 {
     [TestClass]
     public class ConsoleServiceTests
     {
-        Game game;
         ConsoleService sut;
 
         [TestInitialize]
@@ -18,7 +17,7 @@ namespace CatanUtility.Console.Tests
             var saveService = new Mock<ISaveLoad>();
             var gameService = new Mock<IGameService>();
 
-            sut = new ConsoleService(game, gameService.Object, saveService.Object);
+            sut = new ConsoleService(gameService.Object, saveService.Object);
         }
 
         [TestMethod]

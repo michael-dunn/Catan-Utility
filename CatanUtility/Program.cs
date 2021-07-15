@@ -2,7 +2,7 @@
 using CatanUtility.Models;
 using System;
 
-namespace CatanUtility.Console
+namespace CatanUtility
 {
     class MainClass
     {
